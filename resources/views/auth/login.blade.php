@@ -3,7 +3,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head><base href="../../../">
-		<title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel by Keenthemes</title>
+		<title>{{ env('APP_NAME') }} - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel by Keenthemes</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="{{ asset('dashboard_assets') }}/media/logos/favicon.ico" />
@@ -38,7 +38,7 @@
                             <!--begin::Heading-->
 							<div class="text-center mb-10">
 								<!--begin::Title-->
-								<h1 class="text-dark mb-3">Sign In to Metronic</h1>
+								<h1 class="text-dark mb-3">Sign In to {{ env('APP_NAME') }}</h1>
 								<!--end::Title-->
 								<!--begin::Link-->
 								<div class="text-gray-400 fw-bold fs-4">New Here?
@@ -98,10 +98,6 @@
 								<!--begin::Google link-->
 								<a href="#" class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
 								<img alt="Logo" src="{{ asset('dashboard_assets') }}/media/svg/brand-logos/facebook-4.svg" class="h-20px me-3" />Continue with Facebook</a>
-								<!--end::Google link-->
-								<!--begin::Google link-->
-								<a href="#" class="btn btn-flex flex-center btn-light btn-lg w-100">
-								<img alt="Logo" src="{{ asset('dashboard_assets') }}/media/svg/brand-logos/apple-black.svg" class="h-20px me-3" />Continue with Apple</a>
 								<!--end::Google link-->
 							</div>
 							<!--end::Actions-->
