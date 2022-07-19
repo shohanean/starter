@@ -3,10 +3,10 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head><base href="../../../">
-		<title>{{ env('APP_NAME') }} - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel by Keenthemes</title>
+		<title>{{ env('APP_NAME') }} - {{ env('APP_DESCRIPTION') }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="{{ asset('dashboard_assets') }}/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="{{ env('PROJECT_FAVICON') }}" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
@@ -27,7 +27,7 @@
 				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 					<!--begin::Logo-->
 					<a href="../../demo1/dist/index.html" class="mb-12">
-						<img alt="Logo" src="{{ asset('dashboard_assets') }}/media/logos/logo-1.svg" class="h-40px" />
+						<img alt="Logo" src="{{ env('PROJECT_LOGO') }}" class="h-40px" />
 					</a>
 					<!--end::Logo-->
 					<!--begin::Wrapper-->
