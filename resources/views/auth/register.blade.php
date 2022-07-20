@@ -104,6 +104,18 @@
 								<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password_confirmation" autocomplete="off" />
 							</div>
 							<!--end::Input group-->
+                            <!--begin::Input group-->
+							<div class="fv-row mb-10">
+								<!--begin::Wrapper-->
+								<div class="d-flex flex-stack justify-content-center">
+									{!! NoCaptcha::display() !!}
+								</div>
+								<!--end::Wrapper-->
+                                @error('g-recaptcha-response')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+							</div>
+							<!--end::Input group-->
 							<!--begin::Actions-->
 							<div class="text-center">
 								<button type="submit" class="btn btn-lg btn-primary">
@@ -145,6 +157,7 @@
 		<script src="{{ asset('dashboard_assets') }}/js/custom/authentication/sign-up/general.js"></script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
+        {!! NoCaptcha::renderJs() !!}
 	</body>
 	<!--end::Body-->
 </html>
