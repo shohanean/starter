@@ -26,7 +26,7 @@
 				<!--begin::Content-->
 				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
 					<!--begin::Logo-->
-					<a href="../../demo1/dist/index.html" class="mb-12">
+					<a href="{{ route('index') }}" class="mb-12">
 						<img alt="Logo" src="{{ env('PROJECT_LOGO') }}" class="h-40px" />
 					</a>
 					<!--end::Logo-->
@@ -112,7 +112,9 @@
 								</div>
 								<!--end::Wrapper-->
                                 @error('g-recaptcha-response')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <div class="d-flex flex-stack justify-content-center">
+                                        <span class="text-danger">{{ $message }}</span>
+                                    </div>
                                 @enderror
 							</div>
 							<!--end::Input group-->
