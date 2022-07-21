@@ -273,7 +273,7 @@
                         <!--end::Table head-->
                         <!--begin::Table body-->
                         <tbody>
-                            @foreach (App\Models\User::all() as $user)
+                            @foreach ($users as $user)
                                 <tr>
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -293,7 +293,9 @@
                                     </td>
                                     <td>
                                         <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->updated_at->diffForHumans() }}</a>
-                                        <span class="text-muted fw-bold text-muted d-block fs-7">{{ $user->created_at->diffForHumans() }}</span>
+                                        @isset($user->email_verified_at)
+                                            <span class="badge badge-light-success fs-8 fw-bolder">Email Verified</span>
+                                        @endisset
                                     </td>
                                     <td class="text-end">
                                         <div class="d-flex flex-column w-100 me-2">

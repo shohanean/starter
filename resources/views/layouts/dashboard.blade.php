@@ -4002,15 +4002,6 @@
 										<!--end::Menu wrapper-->
 									</div>
 									<!--end::Quick links-->
-									<!--begin::Theme mode-->
-									<div class="d-flex align-items-center ms-1 ms-lg-3">
-										<!--begin::Theme mode docs-->
-										<a class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px" href="../../demo1/dist/documentation/getting-started/dark-mode.html">
-											<i class="fonticon-sun fs-2"></i>
-										</a>
-										<!--end::Theme mode docs-->
-									</div>
-									<!--end::Theme mode-->
 									<!--begin::User menu-->
 									<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 										<!--begin::Menu wrapper-->
@@ -4030,8 +4021,11 @@
 													<!--begin::Username-->
 													<div class="d-flex flex-column">
 														<div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
-														<span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-														<a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
+                                                        @isset(auth()->user()->email_verified_at)
+                                                            <span class="badge badge-circle badge-primary mx-2 my-1">&check;</span>
+                                                        @endisset
+                                                        </div>
+                                                        <p class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</p>
 													</div>
 													<!--end::Username-->
 												</div>
@@ -4040,11 +4034,6 @@
 											<!--begin::Menu separator-->
 											<div class="separator my-2"></div>
 											<!--end::Menu separator-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-5">
-												<a href="../../demo1/dist/account/overview.html" class="menu-link px-5">My Profile</a>
-											</div>
-											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
 												<a href="../../demo1/dist/apps/projects/list.html" class="menu-link px-5">
