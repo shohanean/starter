@@ -283,7 +283,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-45px me-5">
-                                                <img src="{{ asset('dashboard_assets') }}/media/avatars/300-14.jpg" alt="">
+                                                <img src="{{ Avatar::create($user->name)->toBase64() }}" alt="not found"/>
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $user->name }}</a>
