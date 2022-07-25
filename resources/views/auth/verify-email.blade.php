@@ -44,6 +44,11 @@
                         <img src="{{ asset('dashboard_assets') }}/media/auth/please-verify-your-email.png" class="mw-100 mh-300px theme-light-show" alt="" />
                     </div>
                     <!--end::Illustration-->
+
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button class="btn btn-sm btn-danger" type="submit">Logout</button>
+                    </form>
                 @else
                     <!--begin::Title-->
                     <h1 class="fw-bolder text-gray-900 mb-10">
