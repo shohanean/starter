@@ -22,6 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::post('/import', [HomeController::class, 'import'])->name('import');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {
