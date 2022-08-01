@@ -10,7 +10,7 @@
 
             @empty(auth()->user()->email_verified_at)
                     <!--begin::Title-->
-                    <h1 class="fw-bolder text-gray-900 mb-5">Verify your email</h1>
+                    <h1 class="fw-bolder text-gray-900 mb-5">{{ auth()->user()->name }}, Verify your email</h1>
                     <!--end::Title-->
                     <!--begin::Action-->
                     <div class="fs-6 mb-8">
