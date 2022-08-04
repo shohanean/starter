@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class BackupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('backend.profile.index');
+        return view('backend.backup.index');
     }
 
     /**
@@ -56,7 +56,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        return view('backend.profile.edit');
+        //
     }
 
     /**

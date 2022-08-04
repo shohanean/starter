@@ -2,7 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\{HomeController, SocialController, ProfileController};
+use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController};
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +41,9 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 //Profile Routes
 Route::resource('profile', ProfileController::class);
+
+//Backup Routes
+Route::resource('backup', BackupController::class);
 
 //Socialite Routes
 Route::get('auth/facebook', [SocialController::class, 'facebookRedirect'])->name('auth.facebook');
