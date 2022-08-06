@@ -16,9 +16,6 @@ class BackupController extends Controller
      */
     public function index()
     {
-        // return collect(Storage::allFiles('db-backup'))->sortKeys();
-        // return Storage::path('db-backup/2022-08-04-17-25-22.zip');
-        // return Storage::download('db-backup/2022-08-04-17-25-22.zip');
         return view('backend.backup.index',[
             'backups' => collect(Storage::allFiles('db-backup'))->sortKeysDesc()
         ]);
@@ -42,10 +39,11 @@ class BackupController extends Controller
      */
     public function store(Request $request)
     {
-        // return Artisan::call("backup:run");
-        // return Artisan::call("backup:run", [
+        Artisan::call("backup:run");
+        // Artisan::call("backup:run", [
         //     "--only-db" => true
         // ]);
+        dd(Artisan::output());
         // return back();
     }
 
