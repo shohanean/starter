@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home',[
-            'users' => User::latest()->get()
+            'users' => User::latest()->paginate(10)
         ]);
     }
     public function import(Request $request)
