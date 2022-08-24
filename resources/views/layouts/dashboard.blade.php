@@ -92,6 +92,14 @@
 									</div>
 								</div>
 
+                                <div class="menu-item">
+									<a class="menu-link active" href="{{ route('role.index') }}">
+										<span class="menu-icon">
+                                            <i class="fa fa-tasks"></i>
+										</span>
+										<span class="menu-title">Role Manager</span>
+									</a>
+								</div>
 								<div class="menu-item">
 									<div class="menu-content pt-8 pb-2">
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Apps</span>

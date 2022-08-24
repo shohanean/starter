@@ -2,7 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController};
+use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController, RoleController};
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +48,6 @@ Route::resource('backup', BackupController::class);
 //Socialite Routes
 Route::get('auth/facebook', [SocialController::class, 'facebookRedirect'])->name('auth.facebook');
 Route::get('auth/facebook/callback', [SocialController::class, 'loginWithFacebook'])->name('auth.facebook.callback');
+
+//Role Routes
+Route::resource('role', RoleController::class);
