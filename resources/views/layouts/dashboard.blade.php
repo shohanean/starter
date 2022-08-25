@@ -17,6 +17,7 @@
 		<link href="{{ asset('dashboard_assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('dashboard_assets') }}/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+        @livewireStyles
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -974,6 +975,7 @@
 		<script src="{{ asset('dashboard_assets') }}/js/custom/utilities/modals/users-search.js"></script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
+        @livewireScripts
 	</body>
 	<!--end::Body-->
 </html>
