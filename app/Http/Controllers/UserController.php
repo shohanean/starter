@@ -14,9 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.user.index', [
-            'roles' => Role::latest()->get(['id', 'name'])
-        ]);
+        return view('backend.user.index');
     }
 
     /**

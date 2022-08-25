@@ -10,6 +10,12 @@
             <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body pt-0">
+                @if (session()->has('user_add_message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Done!</strong> {{ session('user_add_message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <form wire:submit.prevent="submit">
                     <!--begin::Billing address-->
                     <div class="d-flex flex-column gap-5 gap-md-7">
@@ -20,44 +26,55 @@
                                     <label class="required form-label">Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                    <input class="form-control" name="name" value="">
+                                    <input class="form-control @error ('name') is-invalid @enderror" wire:model="name">
                                 <!--end::Input-->
-                                <div class="fv-plugins-message-container invalid-feedback">hahahahah</div>
+                                @error ('name')
+                                    <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="fv-row flex-row-fluid fv-plugins-icon-container">
                                 <!--begin::Label-->
                                     <label class="required form-label">Email Address</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                    <input class="form-control" name="email" value="">
+                                    <input type="email" class="form-control @error ('email') is-invalid @enderror" wire:model="email">
                                 <!--end::Input-->
+                                @error ('email')
+                                    <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="fv-row flex-row-fluid fv-plugins-icon-container">
                                 <!--begin::Label-->
                                     <label class="required form-label">Password</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                    <input type="password" class="form-control" name="name" value="">
+                                    <input type="password" class="form-control @error ('password') is-invalid @enderror" wire:model="password">
                                 <!--end::Input-->
+                                @error ('password')
+                                    <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="fv-row flex-row-fluid fv-plugins-icon-container">
                                 <!--begin::Label-->
                                     <label class="required form-label">Role</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                    <select class="form-select" name="">
+                                    <select class="form-select @error ('role_name') is-invalid @enderror" wire:model="role_name">
                                         <option value="">-Select One Role-</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
                                     </select>
                                 <!--end::Input-->
+                                @error ('role_name')
+                                    <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <!--end::Input group-->
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
-                            <button type="reset" data-kt-contacts-type="cancel" class="btn btn-light me-3">Cancel</button>
+                            <button type="reset" wire:click="resetForm" class="btn btn-light me-3">Cancel</button>
                             <!--end::Button-->
                             <!--begin::Button-->
                             <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary">
@@ -132,7 +149,7 @@
                                     <span class="badge badge-lg badge-light-primary fw-bold my-2">{{ $user->getRoleNames()->first() }}</span>
                                 </td>
                                 <td class="text-end">
-                                    @if ($user->id != 1)
+                                    @if ($user->getRoleNames()->first() != "Super Admin")
                                         <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
                                         <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">Delete</button>
                                     @else

@@ -26,7 +26,10 @@ class RoleController extends Controller
         //   'name' => 'can delete role'
         // ]);
         // auth()->user()->assignRole('Family');
-        return view('backend.role.index');
+        return view('backend.role.index', [
+          'permissions' => Permission::select('id','name')->get(),
+          'roles' => Role::select('id','name')->with('users')->latest()->get()
+        ]);
     }
 
     /**
