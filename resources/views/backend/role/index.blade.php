@@ -1,178 +1,352 @@
 @extends('layouts.dashboard')
 
+@section('toolbar')
+    @include('parts.toolbar')
+@endsection
+
 @section('content')
-<div class="row">
-    <div class="col-xl-8 mx-auto">
-        <h6 class="mb-0 text-uppercase">Role List</h6>
-        <p class="mt-3">Below is the list of available roles. You can edit existing one, delete a role if your want to but before you have assign another role to the role holder.</p>
-        <hr>
-        <div class="card">
-            <div class="card-body">
-                <div class="p-4 border rounded">
-                    @if (Session::has('role_update_success'))
-                        @component('includes.alert-success')
-                        {{ Session::get('role_update_success') }}
-                        @endcomponent
-                    @endif
-                    @if (Session::has('role_delete_success'))
-                        @component('includes.alert-danger')
-                        {{ Session::get('role_delete_success') }}
-                        @endcomponent
-                    @endif
-                    @error('role_name')
-                        @component('includes.alert-danger')
-                        {{ $message }}
-                        @endcomponent
-                    @enderror
-                    <div class="table-responsive">
-                        <table id="role-list-table" class="table table-bordered table-striped">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Serial No.</th>
-                                    <th>Role Name</th>
-                                    <th>Permissions</th>
-                                    <th>Users in this role</th>
-                                    @canany(['can edit role', 'can delete role'])
-                                        <th>Action</th>
-                                    @endcanany
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @can ('can see role list')
-                                    @forelse ($roles as $serial => $role)
-                                    <tr>
-                                        <td class="text-center">{{ $roles->firstItem() + $loop->index }}</td>
-                                        <td>{{ $role->name }}</td>
-                                        <td>
-                                            @forelse ($role->getAllPermissions() as $permission)
-                                                <span  class="badge bg-light text-dark mb-1">
-                                                    {{ Str::ucfirst($permission->name) }}
-                                                </span>
-                                            <br>
-                                            @empty
-                                                <span  class="badge bg-danger">
-                                                    No Permission Assigned
-                                                </span>
-                                            @endforelse
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $role->users->count() }}
-                                        </td>
-                                        @canany(['can edit role', 'can delete role'])
-                                        <td>
-                                            <div class="btn-group">
-                                                @can('can edit role')
-                                                    @include('includes.role-list-modal', [
-                                                        'role_id' => $role->id,
-                                                        'role_name' => $role->name,
-                                                        'permissions' => $permissions,
-                                                        'assigned_permissions' => $role->getAllPermissions()
-                                                    ])
-                                                @endcan
-                                                @can('can delete role')
-                                                    <form id="form_{{ $role->id }}" method="post" action="{{ route('role.destroy', $role->id) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button id="{{ $role->id }}" type="button" class="btn btn-danger role_delete_btn"><i class="bi bi-trash"></i></button>
-                                                    </form>
-                                                @endcan
-                                            </div>
-                                        </td>
-                                        @endcanany
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="50" class="text-center">Nothing to show</td>
-                                    </tr>
-                                    @endforelse
-                                @else
-                                    <tr>
-                                    <td colspan="50" class="text-center bg-danger text-white">You do not have the permission to see the list.</td>
-                                    </tr>
-                                @endcan
-                            </tbody>
-                        </table>
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
+    <!--begin::Add new card-->
+    <div class="ol-md-4">
+        <!--begin::Card-->
+        <div class="card h-md-100">
+            <!--begin::Card body-->
+            <div class="card-body d-flex flex-center">
+                <!--begin::Button-->
+                <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
+                    <!--begin::Illustration-->
+                    <img src="{{ asset('dashboard_assets/media/illustrations/sketchy-1/4.png') }}" alt="not found" class="mw-100 mh-150px mb-7">
+                    <!--end::Illustration-->
+                    <!--begin::Label-->
+                    <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">Add New Role</div>
+                    <!--end::Label-->
+                </button>
+                <!--begin::Button-->
+            </div>
+            <!--begin::Card body-->
+        </div>
+        <!--begin::Card-->
+    </div>
+    <!--begin::Add new card-->
+    @forelse ($roles as $role)
+        <!--begin::Col-->
+        <div class="col-md-4">
+            <!--begin::Card-->
+            <div class="card card-flush h-md-100">
+                <!--begin::Card header-->
+                <div class="card-header">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <h2>
+                            {{ $role->name }}
+                            <i class="fa fa-tag" aria-hidden="true"></i>
+                        </h2>
                     </div>
-                    {{ $roles->links() }}
+                    <!--end::Card title-->
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-4 mx-auto">
-        <h6 class="mb-0 text-uppercase">Add New Role</h6>
-        <hr>
-        <div class="card shadow-sm border-0 overflow-hidden">
-            <div class="card-body">
-                @if (Session::has('role_success'))
-                    @component('includes.alert-success')
-                    <strong>{{ Session::get('role_success') }},</strong> Role Added Successfully!
-                    With <strong>{{ Session::get('total_permissions') }}</strong> {{ (Session::get('total_permissions') > 1) ? 'Permissions':'Permission' }}.
-                    @endcomponent
-                @endif
-                <form action="{{ route("role.store") }}" method="POST">
-                    @csrf
-                    <div class="border p-4 rounded">
-                        {{-- <div class="row">
-                            @include('parts.form.input.text', [
-                                'fields' => ['role_title'],
-                                'col' => 12,
-                                'validation' => true
-                            ])
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-1">
+                    <!--begin::Users-->
+                        <div class="fw-bolder text-gray-600 mb-5">Total permissions with this role: <span class="badge bg-primary">{{ $role->permissions->count() }}</span></div>
+                    <!--end::Users-->
+                    <!--begin::Users-->
+                        <div class="fw-bolder text-gray-600 mb-5">Total users with this role: <span class="badge bg-primary">{{ $role->users->count() }}</span></div>
+                    <!--end::Users-->
+                    <!--begin::Permissions-->
+                    <div class="d-flex flex-column text-gray-600">
+                        @forelse ($role->permissions as $permission)
+                        <div class="d-flex align-items-center py-2">
+                            <span class="bullet bg-primary me-3"></span> {{ $permission->name }}
+                        </div>
+                        {{-- <div class="d-flex align-items-center py-2">
+                            <span class="bullet bg-primary me-3"></span>
+                            <em>and 7 more...</em>
                         </div> --}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5>
-                                    Permissions <i id="select_all_toggle_button" class="fs-2 bi bi-toggle-off"></i>
-                                </h5>
-                            </div>
-                            @foreach ($permissions as $serial => $permission)
-                                <div class="col-md-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input permission_checkbox" type="checkbox"name="permission[]" value="{{ $permission->id }}" id="permission_{{ $serial }}">
-                                        <label class="form-check-label" for="permission_{{ $serial }}">{{ Str::title($permission->name) }}</label>
-                                    </div>
-                                </div>
-                            @endforeach
+                        @empty
+                        <div class="alert alert-warning" role="alert">
+                            There is no permission added to this role yet
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary px-4">Add New Role</button>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
-                </form>
+                    <!--end::Permissions-->
+                </div>
+                <!--end::Card body-->
+                <!--begin::Card footer-->
+                <div class="card-footer flex-wrap pt-0">
+                    <a href="../../demo1/dist/apps/user-management/roles/view.html" class="btn btn-light btn-active-primary my-1 me-2">View Role</a>
+                    <button type="button" class="btn btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                </div>
+                <!--end::Card footer-->
             </div>
+            <!--end::Card-->
         </div>
-    </div>
+        <!--end::Col-->
+    @empty
+
+    @endforelse
+
 </div>
 @endsection
 
-@section('footer_scripts')
-<script>
-    $(document).ready(function() {
-        // $('#role-list-table').DataTable();
-
-        $('#select_all_toggle_button').click(function(){
-            $(this).toggleClass('fs-2 bi bi-toggle-off fs-2 bi bi-toggle-on');
-            $('.permission_checkbox').attr('checked') ?
-            $('.permission_checkbox').removeAttr('checked', 'checked') : $('.permission_checkbox').attr('checked', 'checked');
-        });
-
-        $('.role_delete_btn').click(function(){
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $("#form_"+$(this).attr('id')).submit();
-                }
-            })
-        });
-    });
-</script>
+@section('modal')
+<!--begin::Modal - Add role-->
+<div class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-750px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">Add a Role</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-lg-5 my-7">
+                <!--begin::Form-->
+                <form id="kt_modal_add_role_form" class="form" action="{{ route('role.store') }}" method="POST">
+                    @csrf
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_role_header" data-kt-scroll-wrappers="#kt_modal_add_role_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="fs-5 fw-bolder form-label mb-2">
+                                <span class="required">Role name</span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input class="form-control form-control-solid" placeholder="Enter a role name" name="role_title">
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Permissions-->
+                        <div class="fv-row">
+                            <!--begin::Label-->
+                            <label class="fs-5 fw-bolder form-label mb-2">Role Permissions</label>
+                            <!--end::Label-->
+                            <!--begin::Table wrapper-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5">
+                                    <!--begin::Table body-->
+                                    <tbody class="text-gray-600 fw-bold">
+                                        @if($permissions->count() == 0)
+                                            <div class="alert alert-danger" role="alert">
+                                                There is no permission to show
+                                            </div>
+                                        @else
+                                            <!--begin::Table row-->
+                                            <tr>
+                                                <td class="text-gray-800">All Access
+                                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Allows a full access to the system"></i></td>
+                                                <td>
+                                                    <!--begin::Checkbox-->
+                                                    <label class="form-check form-check-custom form-check-solid me-9">
+                                                        <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
+                                                        <span class="form-check-label" for="kt_roles_select_all">Select all</span>
+                                                    </label>
+                                                    <!--end::Checkbox-->
+                                                </td>
+                                            </tr>
+                                            <!--end::Table row-->
+                                        @endif
+                                        @foreach ($permissions as $permission)
+                                            <!--begin::Table row-->
+                                            <tr>
+                                                <!--begin::Label-->
+                                                <td class="text-gray-800">{{ Str::title($permission->name) }}</td>
+                                                <!--end::Label-->
+                                                <!--begin::Options-->
+                                                <td>
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex">
+                                                        <!--begin::Checkbox-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                            <input class="form-check-input" type="checkbox" value="{{ $permission->name }}" name="permission[]">
+                                                            <span class="form-check-label">Select</span>
+                                                        </label>
+                                                        <!--end::Checkbox-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </td>
+                                                <!--end::Options-->
+                                            </tr>
+                                            <!--end::Table row-->
+                                        @endforeach
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Table wrapper-->
+                        </div>
+                        <!--end::Permissions-->
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">Discard</button>
+                        @if($permissions->count() != 0)
+                        <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
+                            <span class="indicator-label">Submit</span>
+                        </button>
+                        @endif
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add role-->
+<!--begin::Modal - Update role-->
+<div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-750px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bolder">Update Role</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 my-7">
+                <!--begin::Form-->
+                <form id="kt_modal_update_role_form" class="form" action="#">
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_role_header" data-kt-scroll-wrappers="#kt_modal_update_role_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-10">
+                            <!--begin::Label-->
+                            <label class="fs-5 fw-bolder form-label mb-2">
+                                <span class="required">Role name</span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input class="form-control form-control-solid" placeholder="Enter a role name" name="role_name" value="Developer" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Permissions-->
+                        <div class="fv-row">
+                            <!--begin::Label-->
+                            <label class="fs-5 fw-bolder form-label mb-2">Role Permissions</label>
+                            <!--end::Label-->
+                            <!--begin::Table wrapper-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5">
+                                    <!--begin::Table body-->
+                                    <tbody class="text-gray-600 fw-bold">
+                                        <!--begin::Table row-->
+                                        <tr>
+                                            <td class="text-gray-800">Administrator Access
+                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Allows a full access to the system"></i></td>
+                                            <td>
+                                                <!--begin::Checkbox-->
+                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
+                                                    <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
+                                                    <span class="form-check-label" for="kt_roles_select_all">Select all</span>
+                                                </label>
+                                                <!--end::Checkbox-->
+                                            </td>
+                                        </tr>
+                                        <!--end::Table row-->
+                                        <!--begin::Table row-->
+                                        <tr>
+                                            <!--begin::Label-->
+                                            <td class="text-gray-800">User Management</td>
+                                            <!--end::Label-->
+                                            <!--begin::Input group-->
+                                            <td>
+                                                <!--begin::Wrapper-->
+                                                <div class="d-flex">
+                                                    <!--begin::Checkbox-->
+                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_read" />
+                                                        <span class="form-check-label">Read</span>
+                                                    </label>
+                                                    <!--end::Checkbox-->
+                                                    <!--begin::Checkbox-->
+                                                    <label class="form-check form-check-custom form-check-solid me-5 me-lg-20">
+                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_write" />
+                                                        <span class="form-check-label">Write</span>
+                                                    </label>
+                                                    <!--end::Checkbox-->
+                                                    <!--begin::Checkbox-->
+                                                    <label class="form-check form-check-custom form-check-solid">
+                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_create" />
+                                                        <span class="form-check-label">Create</span>
+                                                    </label>
+                                                    <!--end::Checkbox-->
+                                                </div>
+                                                <!--end::Wrapper-->
+                                            </td>
+                                            <!--end::Input group-->
+                                        </tr>
+                                        <!--end::Table row-->
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Table wrapper-->
+                        </div>
+                        <!--end::Permissions-->
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">Discard</button>
+                        <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait...
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Update role-->
 @endsection

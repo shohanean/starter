@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        // for ($i=0; $i < 1000; $i++) {
+        // for ($i=0; $i < 11; $i++) {
         //   Role::create([
         //     'name' => Str::random(20)
         //   ]);
@@ -28,7 +28,7 @@ class RoleController extends Controller
         // auth()->user()->assignRole('Family');
         return view('backend.role.index', [
           'permissions' => Permission::select('id','name')->get(),
-          'roles' => Role::select('id','name')->with('users')->latest()->paginate(5)
+          'roles' => Role::select('id','name')->with('users')->latest()->get()
         ]);
     }
 
