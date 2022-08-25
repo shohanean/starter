@@ -16,7 +16,7 @@ class Adduser extends Component
 
     protected $rules = [
         'name' => 'required',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:App\Models\User,email',
         'password' => 'required',
         'role_name' => 'required',
     ];
@@ -31,10 +31,7 @@ class Adduser extends Component
         ]);
 
         $user->assignRole($this->role_name);
-        $this->name = "";
-        $this->email = "";
-        $this->password = "";
-        $this->role_name = "";
+        $this->resetExcept();
         session()->flash('user_add_message', 'User added deleted.');
     }
     public function userDelete($id)
@@ -44,10 +41,7 @@ class Adduser extends Component
     }
     public function resetForm()
     {
-        $this->name = "";
-        $this->email = "";
-        $this->password = "";
-        $this->role_name = "";
+        $this->resetExcept();
     }
     public function render()
     {
