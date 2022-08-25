@@ -74,19 +74,11 @@
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
 										<div class="menu-item">
-											<a class="menu-link active" href="../../demo1/dist/index.html">
+											<a class="menu-link active" href="{{ route('home') }}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-												<span class="menu-title">Multipurpose</span>
-											</a>
-										</div>
-										<div class="menu-item">
-											<a class="menu-link" href="../../demo1/dist/dashboards/ecommerce.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">eCommerce</span>
+												<span class="menu-title">Home</span>
 											</a>
 										</div>
 									</div>
@@ -108,7 +100,7 @@
 									</span>
 									<div class="menu-sub menu-sub-accordion">
 										<div class="menu-item">
-											<a class="menu-link" href="../../demo1/dist/apps/user-management/permissions.html">
+											<a class="menu-link" href="{{ route('user.index') }}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -121,14 +113,6 @@
 													<span class="bullet bullet-dot"></span>
 												</span>
 												<span class="menu-title">Roles</span>
-											</a>
-										</div>
-										<div class="menu-item">
-											<a class="menu-link" href="../../demo1/dist/apps/user-management/permissions.html">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Permissions</span>
 											</a>
 										</div>
 									</div>

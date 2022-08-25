@@ -2,7 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController, RoleController};
+use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController, RoleController, UserController};
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +51,6 @@ Route::get('auth/facebook/callback', [SocialController::class, 'loginWithFaceboo
 
 //Role Routes
 Route::resource('role', RoleController::class);
+
+//User Routes
+Route::resource('user', UserController::class);

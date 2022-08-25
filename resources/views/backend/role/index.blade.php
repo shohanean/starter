@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+
+@if (session('role_success'))
+    <div class="alert alert-success">{{ session('role_success') }} added with {{ session('total_permissions') }} permission</div>
+@endif
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
     <!--begin::Add new card-->
     <div class="ol-md-4">
