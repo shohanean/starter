@@ -11,10 +11,24 @@
             <!--begin::Card body-->
             <div class="card-body pt-0">
                 @if (session()->has('user_add_message'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Done!</strong> {{ session('user_add_message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: "{{ session('user_add_message') }}"
+                        })
+                    </script>
                 @endif
                 <form wire:submit.prevent="submit">
                     <!--begin::Billing address-->
