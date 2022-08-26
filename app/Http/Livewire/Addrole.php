@@ -21,6 +21,8 @@ class Addrole extends Component
 
         $role = Role::create(['name' => Str::title($this->role_title)]);
         $role->syncPermissions($this->permission);
+        $this->resetExcept();
+        session()->flash('role_add_message', 'Role added successfully!.');
         // (isset($this->permission)) ? $total_permissions = count($this->permission) : $total_permissions = 0;
         // return back()->with([
         //   'role_success' => $role->name,

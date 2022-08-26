@@ -1,6 +1,6 @@
 <div>
 <!--begin::Modal - Add role-->
-<div class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-750px">
         <!--begin::Modal content-->
@@ -26,12 +26,11 @@
             <!--end::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body scroll-y mx-lg-5 my-7">
-                <div class="alert alert-success" role="alert">
-                    asd
-                </div>
-                <div class="alert alert-danger" role="alert">
-                    asd
-                </div>
+                @if (session()->has('role_add_message'))
+                    <div class="alert alert-success">
+                        {{ session('role_add_message') }}
+                    </div>
+                @endif
                 <!--begin::Form-->
                 <form wire:submit.prevent="submit">
                     <!--begin::Scroll-->
