@@ -32,7 +32,7 @@ class Adduser extends Component
 
         $user->assignRole($this->role_name);
         $this->resetExcept();
-        session()->flash('user_add_message', 'User added successfully!.');
+        session()->flash('user_add_message', 'User added successfully!');
     }
     public function userDelete($id)
     {

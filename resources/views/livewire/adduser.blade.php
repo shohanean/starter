@@ -117,10 +117,24 @@
         <!--begin::Body-->
         <div class="card-body py-3">
             @if (session()->has('user_delete_message'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Done!</strong> {{ session('user_delete_message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <script>
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'warning',
+                        title: "{{ session('user_delete_message') }}"
+                    })
+                </script>
             @endif
             <!--begin::Table container-->
             <div class="table-responsive">
