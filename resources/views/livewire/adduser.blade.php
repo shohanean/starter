@@ -74,14 +74,14 @@
                         <!--end::Input group-->
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
-                            <button type="reset" wire:click="resetForm" class="btn btn-light me-3">Cancel</button>
+                            <button type="reset" wire:click="resetForm" class="btn btn-light me-3">Reset</button>
                             <!--end::Button-->
                             <!--begin::Button-->
-                            <button type="submit" data-kt-contacts-type="submit" class="btn btn-primary">
-                                <span class="indicator-label">Save</span>
-                                <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
+                                <button wire:offline.attr="disabled" type="submit" data-kt-contacts-type="submit" class="btn btn-primary">
+                                    <span class="indicator-label">Add User</span>
+                                    <span class="indicator-progress">Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                </button>
                             <!--end::Button-->
                         </div>
                     </div>
@@ -151,7 +151,10 @@
                                 <td class="text-end">
                                     @if ($user->getRoleNames()->first() != "Super Admin")
                                         <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
-                                        <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">Delete</button>
+                                        <button wire:loading.class="d-none" wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">Delete</button>
+                                        <div wire:loading wire:target="userDelete({{ $user->id }})">
+                                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                                        </div>
                                     @else
                                         <span class="badge bg-secondary text-dark">Changes not allowed</span>
                                     @endif
