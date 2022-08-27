@@ -10,11 +10,20 @@ use Illuminate\Support\Str;
 class Addrole extends Component
 {
     public $role_title;
+    public $checked_status = "";
     public $permission = [];
 
     protected $rules = [
         'role_title' => 'required|unique:roles,name'
     ];
+    public function selectall()
+    {
+        $this->checked_status = "checked";
+    }
+    public function deleterole($id)
+    {
+        Role::findOrFail($id)->delete();
+    }
     public function submit()
     {
         $this->validate();
@@ -32,7 +41,8 @@ class Addrole extends Component
     public function render()
     {
         return view('livewire.addrole', [
-            'permissions' => Permission::select('id','name')->get()
+            'permissions' => Permission::select('id','name')->get(),
+            'roles' => Role::select('id','name')->with('users')->latest()->get()
         ]);
     }
 }
