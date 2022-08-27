@@ -144,8 +144,8 @@
                     <thead>
                         <tr class="fw-bolder text-muted bg-light">
                             <th class="ps-4 min-w-300px rounded-start">Agent</th>
-                            <th class="min-w-125px">Earnings</th>
                             <th class="min-w-150px">Role</th>
+                            <th class="min-w-150px">Permissions</th>
                             <th class="min-w-200px text-end rounded-end"></th>
                         </tr>
                     </thead>
@@ -164,25 +164,32 @@
                                                 {{ $user->name }}
                                             </a>
                                             <span class="text-muted fw-bold text-muted d-block fs-7">
-                                                {{ $user->email }}
+                                                <i class="fa fa-envelope"></i> {{ $user->email }}
                                             </span>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">$1,320,000</a>
-                                    <span class="text-muted fw-bold text-muted d-block fs-7">Pending</span>
+                                    @empty($user->getRoleNames()->first())
+                                        <span class="badge bg-secondary text-dark">No Role</span>
+                                    @endempty
+                                    <span class="badge badge-lg badge-light-primary fw-bold my-2">{{ $user->getRoleNames()->first() }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge badge-lg badge-light-primary fw-bold my-2">{{ $user->getRoleNames()->first() }}</span>
+                                    @forelse ($user->getAllPermissions() as $permission)
+                                        <span class="badge badge-light-success text-dark fw-bold my-1">
+                                            {{ Str::title($permission->name) }}
+                                        </span>
+                                    @empty
+                                        <span class="badge bg-secondary text-dark">No Permission</span>
+                                    @endforelse
                                 </td>
                                 <td class="text-end">
                                     @if ($user->getRoleNames()->first() != "Super Admin")
                                         <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
-                                        <button wire:loading.class="d-none" wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">Delete</button>
-                                        <div wire:loading wire:target="userDelete({{ $user->id }})">
-                                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                                        </div>
+                                        <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">
+                                            Delete
+                                        </button>
                                     @else
                                         <span class="badge bg-secondary text-dark">Changes not allowed</span>
                                     @endif
