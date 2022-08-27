@@ -178,7 +178,7 @@
                                 <td>
                                     @forelse ($user->getAllPermissions() as $permission)
                                         <span class="badge badge-light-success text-dark fw-bold my-1">
-                                            {{ Str::title($permission->name) }}
+                                            <i class="fa fa-check-circle"></i>&nbsp;{{ Str::title($permission->name) }}
                                         </span>
                                     @empty
                                         <span class="badge bg-secondary text-dark">No Permission</span>
