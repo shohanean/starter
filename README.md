@@ -13,6 +13,7 @@ This is a starter project for Laravel with various packages included.
 Packages List is given below:
 
 - Avatar Generator [laravolt/avatar](https://github.com/laravolt/avatar).
+- Number to Words Converter [kwn/number-to-words](https://github.com/kwn/number-to-words).
 - [Laravel Livewire](https://laravel-livewire.com/).
 
 
