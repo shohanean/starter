@@ -76,7 +76,7 @@
                                     <select class="form-select @error ('role_name') is-invalid @enderror" wire:model="role_name">
                                         <option value="">-Select One Role-</option>
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}">{{ $role->name }} (Permissions: {{ $role->getAllPermissions()->count() }})</option>
                                         @endforeach
                                     </select>
                                 <!--end::Input-->

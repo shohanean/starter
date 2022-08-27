@@ -5,7 +5,11 @@
 @endsection
 
 @section('toolbar')
-    @include('parts.toolbar')
+    @includeIf('parts.toolbar', [
+        'links' => [
+            'home' => 'home'
+        ]
+    ])
 @endsection
 
 @section('content')

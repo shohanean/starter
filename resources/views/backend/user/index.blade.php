@@ -9,7 +9,12 @@ active
 @endsection
 
 @section('toolbar')
-    @include('parts.toolbar')
+    @includeIf('parts.toolbar', [
+        'links' => [
+            'home' => 'home',
+            'users' => 'user.index'
+        ]
+    ])
 @endsection
 
 @section('content')
