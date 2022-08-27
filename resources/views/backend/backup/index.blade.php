@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('backup.index')
+active
+@endsection
+
 @section('content')
 <!--begin::Card-->
 <div class="card card-flush pb-0 bgi-position-y-center bgi-no-repeat mb-10" style="background-size: auto calc(100% + 10rem); background-position-x: 100%; background-image: url('assets/media/illustrations/sketchy-1/4.png')">

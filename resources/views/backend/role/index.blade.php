@@ -1,5 +1,13 @@
 @extends('layouts.dashboard')
 
+@section('user_management')
+here show
+@endsection
+
+@section('role.index')
+active
+@endsection
+
 @section('toolbar')
     @include('parts.toolbar')
 @endsection

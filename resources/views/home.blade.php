@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('home')
+    active
+@endsection
+
 @section('toolbar')
     @include('parts.toolbar')
 @endsection

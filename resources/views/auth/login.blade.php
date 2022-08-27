@@ -21,7 +21,7 @@
             <label class="form-label fs-6 fw-bolder text-dark">Email</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" value="{{ old('email') }}"/>
+            <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid" type="text" name="email" autocomplete="off" value="{{ old('email') }}admin@admin.com"/>
             <!--end::Input-->
             @error('email')
                 <span class="text-danger">{{ $message }}</span>
@@ -41,7 +41,7 @@
             </div>
             <!--end::Wrapper-->
             <!--begin::Input-->
-            <input class="@error('password') is-invalid @enderror form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+            <input class="@error('password') is-invalid @enderror form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" value="123456789"/>
             <!--end::Input-->
             @error('password')
                 <span class="text-danger">{{ $message }}</span>
