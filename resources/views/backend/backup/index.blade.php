@@ -4,60 +4,46 @@
 active
 @endsection
 
+@section('toolbar')
+    @includeIf('parts.toolbar', [
+        'links' => [
+            'home' => 'home',
+            'backup' => 'backup.index'
+        ]
+    ])
+@endsection
+
 @section('content')
 <!--begin::Card-->
 <div class="card card-flush pb-0 bgi-position-y-center bgi-no-repeat mb-10" style="background-size: auto calc(100% + 10rem); background-position-x: 100%; background-image: url('assets/media/illustrations/sketchy-1/4.png')">
     <!--begin::Card header-->
-    <div class="card-header pt-10">
+    <div class="card-header py-10">
         <div class="d-flex align-items-center">
             <!--begin::Icon-->
             <div class="symbol symbol-circle me-5">
                 <div class="symbol-label bg-transparent text-primary border border-secondary border-dashed">
-                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs020.svg-->
-                    <span class="svg-icon svg-icon-2x svg-icon-primary">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.302 11.35L12.002 20.55H21.202C21.802 20.55 22.202 19.85 21.902 19.35L17.302 11.35Z" fill="currentColor"></path>
-                            <path opacity="0.3" d="M12.002 20.55H2.802C2.202 20.55 1.80202 19.85 2.10202 19.35L6.70203 11.45L12.002 20.55ZM11.302 3.45L6.70203 11.35H17.302L12.702 3.45C12.402 2.85 11.602 2.85 11.302 3.45Z" fill="currentColor"></path>
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
+                    <i class="fa fa-database fa-2x text-danger"></i>
                 </div>
             </div>
             <!--end::Icon-->
             <!--begin::Title-->
             <div class="d-flex flex-column">
-                <h2 class="mb-1">File Manager</h2>
+                <h2 class="mb-1">Backup</h2>
                 <div class="text-muted fw-bold">
-                <a href="#">Keenthemes</a>
-                <span class="mx-3">|</span>
-                <a href="#">File Manager</a>
-                <span class="mx-3">|</span>2.6 GB
-                <span class="mx-3">|</span>{{ $backups->count() }} items</div>
+                    @php
+                        $total_size = 0;
+                    @endphp
+                    @foreach ($backups as $backup)
+                        @php
+                            $total_size += Storage::size($backup);
+                        @endphp
+                    @endforeach
+                {{ $total_size }} GB <span class="mx-3">|</span>{{ $backups->count() }} items</div>
             </div>
             <!--end::Title-->
         </div>
     </div>
     <!--end::Card header-->
-    <!--begin::Card body-->
-    <div class="card-body pb-0">
-        <!--begin::Navs-->
-        <div class="d-flex overflow-auto h-55px">
-            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-semibold flex-nowrap">
-                <!--begin::Nav item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary me-6 active" href="../../demo1/dist/apps/file-manager/folders.html">Files</a>
-                </li>
-                <!--end::Nav item-->
-                <!--begin::Nav item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary me-6" href="../../demo1/dist/apps/file-manager/settings.html">Settings</a>
-                </li>
-                <!--end::Nav item-->
-            </ul>
-        </div>
-        <!--begin::Navs-->
-    </div>
-    <!--end::Card body-->
 </div>
 <!--end::Card-->
 
@@ -93,7 +79,8 @@ active
     <!--begin::Card body-->
     <div class="card-body">
         <!--begin::Table-->
-        <div id="kt_file_manager_list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table id="kt_file_manager_list" data-kt-filemanager-table="files" class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
+        <div id="kt_file_manager_list_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive">
+            <table id="kt_file_manager_list" data-kt-filemanager-table="files" class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer">
             <!--begin::Table head-->
             <thead>
                 <!--begin::Table row-->
@@ -115,17 +102,11 @@ active
                         </div></td>
                     <!--end::Checkbox-->
                     <!--begin::Name=-->
-                    <td><div class="d-flex align-items-center">
-                            <!--begin::Svg Icon | path: icons/duotune/files/fil003.svg-->
-                            <span class="svg-icon svg-icon-2x svg-icon-primary me-4">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22Z" fill="currentColor"></path>
-                                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"></path>
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
+                    <td>
+                        <div class="d-flex align-items-center">
                             <span class="text-gray-800 text-hover-primary">{{ $backup }}</span>
-                        </div></td>
+                        </div>
+                    </td>
                     <!--end::Name=-->
                     <!--begin::Size-->
                     <td>{{ Storage::size($backup) }} bytes</td>
@@ -189,13 +170,7 @@ active
             <!--end::Table body-->
         </table>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start">
-                </div>
-                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                    <div class="dataTables_paginate paging_simple_numbers" id="kt_file_manager_list_paginate">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="kt_file_manager_list_previous"><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="7" tabindex="0" class="page-link">7</a></li><li class="paginate_button page-item next" id="kt_file_manager_list_next"><a href="#" aria-controls="kt_file_manager_list" data-dt-idx="8" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
+        </div>
         <!--end::Table-->
     </div>
     <!--end::Card body-->

@@ -39,10 +39,10 @@ class BackupController extends Controller
      */
     public function store(Request $request)
     {
-        Artisan::call("backup:run");
-        // Artisan::call("backup:run", [
-        //     "--only-db" => true
-        // ]);
+        // Artisan::call("backup:run");
+        Artisan::call("backup:run", [
+            "--only-db" => true
+        ]);
         dd(Artisan::output());
         // return back();
     }

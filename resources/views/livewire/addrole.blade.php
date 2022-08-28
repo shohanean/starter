@@ -45,19 +45,31 @@
                     </div>
                     <!--begin::Permissions-->
                     <div class="d-flex flex-column text-gray-600">
-                        @forelse ($role->permissions as $permission)
-                        <div class="d-flex align-items-center py-2">
-                            <span class="bullet bg-primary me-3"></span> {{ $permission->name }}
-                        </div>
-                        {{-- <div class="d-flex align-items-center py-2">
-                            <span class="bullet bg-primary me-3"></span>
-                            <em>and 7 more...</em>
-                        </div> --}}
+                        @forelse ($role->permissions->take(3) as $permission)
+                            <div class="d-flex align-items-center py-2">
+                                <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
+                            </div>
                         @empty
-                        <div class="alert alert-warning" role="alert">
-                            There is no permission added to this role yet
-                        </div>
+                            <div class="alert alert-warning mt-3" role="alert">
+                                There is no permission added to this role yet
+                            </div>
                         @endforelse
+                        @if ($role->permissions->count() > 3)
+                            <div x-data="{ open: false }">
+                                <span x-show="!open">
+                                    <a @click="open = ! open" class="d-flex align-items-center py-2">
+                                        <i class="text-primary fa fa-plus"></i> &nbsp; <em>and {{ $role->permissions->count() - 3 }} more...</em>
+                                    </a>
+                                </span>
+                                <div x-show="open" @click.outside="open = false" x-transition>
+                                    @foreach ($role->permissions->skip(3) as $permission)
+                                    <div class="d-flex align-items-center py-2">
+                                        <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <!--end::Permissions-->
                 </div>
@@ -65,9 +77,9 @@
                 <!--begin::Card footer-->
                 <div class="card-footer flex-wrap pt-0">
                     @if ($role->users->count() == 0)
-                        <button wire:click="deleterole({{ $role->id }})" class="btn btn-danger my-1 me-2">Delete Role</button>
+                        <button wire:click="deleterole({{ $role->id }})" class="btn btn-sm btn-danger my-1 me-2">Delete Role</button>
                     @endif
-                    <button type="button" class="btn btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                    <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
                 </div>
                 <!--end::Card footer-->
             </div>
