@@ -57,7 +57,7 @@
                         @if ($role->permissions->count() > 3)
                             <div x-data="{ open: false }">
                                 <span x-show="!open">
-                                    <a @click="open = ! open" class="d-flex align-items-center py-2">
+                                    <a style="cursor: pointer" @click="open = ! open" class="d-flex align-items-center py-2">
                                         <i class="text-primary fa fa-plus"></i> &nbsp; <em>and {{ $role->permissions->count() - 3 }} more...</em>
                                     </a>
                                 </span>

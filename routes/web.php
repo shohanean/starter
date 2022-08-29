@@ -39,18 +39,21 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent again!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-//Profile Routes
-Route::resource('profile', ProfileController::class);
-
-//Backup Routes
-Route::resource('backup', BackupController::class);
-
 //Socialite Routes
 Route::get('auth/facebook', [SocialController::class, 'facebookRedirect'])->name('auth.facebook');
 Route::get('auth/facebook/callback', [SocialController::class, 'loginWithFacebook'])->name('auth.facebook.callback');
 
-//Role Routes
-Route::resource('role', RoleController::class);
+Route::middleware(['auth'])->group(function () {
+    //Profile Routes
+    Route::resource('profile', ProfileController::class);
 
-//User Routes
-Route::resource('user', UserController::class);
+    //Backup Routes
+    Route::resource('backup', BackupController::class);
+
+    //Role Routes
+    Route::resource('role', RoleController::class);
+
+    //User Routes
+    Route::resource('user', UserController::class);
+});
+
