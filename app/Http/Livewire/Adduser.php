@@ -6,6 +6,7 @@ use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Carbon\Carbon;
 
 class Adduser extends Component
 {
@@ -27,7 +28,8 @@ class Adduser extends Component
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password
+            'password' => bcrypt($this->password),
+            'email_verified_at' => Carbon::now()
         ]);
 
         $user->assignRole($this->role_name);

@@ -160,34 +160,27 @@
 <!--begin::Connected Accounts-->
 <div class="card mb-5 mb-xl-10">
     <!--begin::Card header-->
-    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_connected_accounts" aria-expanded="true" aria-controls="kt_account_connected_accounts">
+    <div class="card-header border-0">
         <div class="card-title m-0">
             <h3 class="fw-bold m-0">Connected Accounts</h3>
         </div>
     </div>
     <!--end::Card header-->
     <!--begin::Content-->
-    <div id="kt_account_settings_connected_accounts" class="collapse show">
+    <div class="collapse show">
         <!--begin::Card body-->
         <div class="card-body border-top p-9">
             <!--begin::Notice-->
-            <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
-                <!--begin::Icon-->
-                <!--begin::Svg Icon | path: icons/duotune/art/art006.svg-->
-                <span class="svg-icon svg-icon-2tx svg-icon-primary me-4">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M22 19V17C22 16.4 21.6 16 21 16H8V3C8 2.4 7.6 2 7 2H5C4.4 2 4 2.4 4 3V19C4 19.6 4.4 20 5 20H21C21.6 20 22 19.6 22 19Z" fill="currentColor"></path>
-                        <path d="M20 5V21C20 21.6 19.6 22 19 22H17C16.4 22 16 21.6 16 21V8H8V4H19C19.6 4 20 4.4 20 5ZM3 8H4V4H3C2.4 4 2 4.4 2 5V7C2 7.6 2.4 8 3 8Z" fill="currentColor"></path>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-                <!--end::Icon-->
+            <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed mb-9 p-6">
+                <i class="fa fa-trash fa-2x text-danger p-2"></i>
                 <!--begin::Wrapper-->
                 <div class="d-flex flex-stack flex-grow-1">
                     <!--begin::Content-->
                     <div class="fw-semibold">
-                        <div class="fs-6 text-gray-700">Two-factor authentication adds an extra layer of security to your account. To log in, in you'll need to provide a 4 digit amazing code.
-                        <a href="#" class="fw-bold">Learn More</a></div>
+                        <div class="fs-6 text-gray-700">
+                            You can delete your account by clicking the below link. Once you delete it, you won't be able to undo the action. Only super admin will be able to reactive your account.
+                            <a href="#" class="fw-bold">I am sure, I want to delete my account</a>
+                        </div>
                     </div>
                     <!--end::Content-->
                 </div>
