@@ -1,9 +1,8 @@
 <?php
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{Route,Auth};
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController, RoleController, UserController};
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes

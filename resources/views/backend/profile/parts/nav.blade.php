@@ -6,8 +6,7 @@
             <!--begin: Pic-->
             <div class="me-7 mb-4">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                    <img src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" alt="profile image">
-                    <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>
+                    <img src="{{ ($avatar_link) ? asset($avatar_link) : Avatar::create(auth()->user()->name)->setShape('square') }}" alt="profile image">
                 </div>
             </div>
             <!--end::Pic-->

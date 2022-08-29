@@ -15,7 +15,7 @@
         <!--begin::Content-->
         <div id="kt_account_settings_profile_details" class="collapse show">
             <!--begin::Form-->
-            <form id="kt_account_profile_details_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
+            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" wire:submit.prevent="save">
                 <!--begin::Card body-->
                 <div class="card-body border-top p-9">
                     <!--begin::Input group-->
@@ -25,16 +25,21 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
+                            @if (session()->has('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                             <!--begin::Image input-->
                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('dashboard_assets/media/svg/avatars/blank.svg') }})">
                                 <!--begin::Preview existing avatar-->
-                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ Avatar::create(auth()->user()->name)->setShape('square') }})"></div>
+                                <div wire:ignore class="image-input-wrapper w-125px h-125px" style="background-image: url({{ ($avatar_link) ? asset($avatar_link) : Avatar::create(auth()->user()->name)->setShape('square') }})"></div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" data-kt-initialized="1">
                                     <i class="bi bi-pencil-fill fs-7"></i>
                                     <!--begin::Inputs-->
-                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+                                    <input type="file" wire:model="avatar">
                                     <input type="hidden" name="avatar_remove">
                                     <!--end::Inputs-->
                                 </label>
@@ -53,12 +58,19 @@
                             <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            @error('avatar')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <!--end::Hint-->
                         </div>
                         <!--end::Col-->
                     </div>
                     <!--end::Input group-->
-                    <!--begin::Input group-->
+
+
+                    {{-- I will use later --}}
+
+                    {{-- <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Company</label>
@@ -138,16 +150,19 @@
                         </div>
                         <!--begin::Label-->
                     </div>
-                    <!--end::Input group-->
+                    <!--end::Input group--> --}}
                 </div>
                 <!--end::Card body-->
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                    {{-- <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button> --}}
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
                 <!--end::Actions-->
-            <input type="hidden"><div></div></form>
+            <input type="hidden">
+            <div>
+            </div>
+            </form>
             <!--end::Form-->
         </div>
         <!--end::Content-->
@@ -174,9 +189,9 @@
                     <div class="d-flex flex-stack flex-grow-1">
                         <!--begin::Content-->
                         <div class="fw-semibold">
-                            <div class="fs-6 text-gray-700">
+                            <div class="fs-6">
                                 You can delete your account by typing the below generated code. Once you delete it, you won't be able to undo the action. Only super admin will be able to reactive your account.
-                                <a href="#" class="fw-bold">I am sure, I want to delete my account</a>
+                                <span class="fw-bold text-danger">I am sure, I want to delete my account</span>
                             </div>
                             <div class="row mt-5">
                                 <div class="col-md-4 p-1">
