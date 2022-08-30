@@ -238,7 +238,7 @@
                             <div class="timeline-item">
                                 <!--begin::Label-->
                                 <div class="timeline-label fw-bold text-gray-800 fs-8">
-                                    {{ $log->created_at->format('H:i A') }}
+                                    {{ $log->created_at->format('h:i A') }}
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Badge-->
@@ -265,7 +265,7 @@
                                 <div class="timeline-item">
                                     <!--begin::Label-->
                                     <div class="timeline-label fw-bold text-gray-800 fs-8">
-                                        {{ $more_log->created_at->format('H:i A') }}
+                                        {{ $more_log->created_at->format('h:i A') }}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Badge-->
@@ -284,8 +284,8 @@
                         @endif
                     </div>
                     <!--end::Timeline-->
-                    @if (count($logs) > 0)
-                        <button wire:click="loadolder" class="btn btn-sm btn-info mt-9">Load Older</button>
+                    @if ($logs->total() > 10)
+                        <button wire:loading.attr="disabled" wire:click="loadolder" class="btn btn-sm btn-info mt-9 {{ $loadolder_btn }}">Load Older</button>
                     @endif
                 </div>
                 <!--end: Card Body-->

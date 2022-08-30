@@ -9,6 +9,7 @@ class Index extends Component
 {
     public $avatar_link;
     public $more_logs;
+    public $loadolder_btn;
 
     public function mount()
     {
@@ -17,6 +18,7 @@ class Index extends Component
     public function loadolder()
     {
         $this->more_logs = Log::where('user_id', auth()->id())->offset(10)->take(Log::count())->latest()->get();
+        $this->loadolder_btn = "d-none";
     }
     public function render()
     {

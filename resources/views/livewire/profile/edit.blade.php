@@ -69,11 +69,11 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Company</label>
+                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                            <input type="text" name="company" class="form-control form-control-lg form-control-solid" placeholder="Company name" value="Keenthemes">
+                            <input type="text" name="company" class="form-control form-control-lg" placeholder="Name" value="{{ auth()->user()->name }}">
                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <!--end::Col-->
                     </div>
@@ -88,7 +88,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                            <input type="tel" name="phone" class="form-control form-control-lg form-control-solid" placeholder="Phone number" value="044 3276 454 935">
+                            <input type="tel" name="phone" class="form-control form-control-lg" placeholder="Phone number" value="">
                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <!--end::Col-->
                     </div>
@@ -209,7 +209,7 @@
             <div class="card-body border-top p-9">
                 <!--begin::Notice-->
                 <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed mb-9 p-6">
-                    <i class="fa fa-trash fa-2x text-danger p-2"></i>
+                    <i class="fa fa-trash fa-2x text-danger p-3"></i>
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-stack flex-grow-1">
                         <!--begin::Content-->
