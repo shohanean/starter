@@ -34,12 +34,12 @@ class Adduser extends Component
         ]);
 
         $user->assignRole($this->role_name);
-        $this->resetExcept();
         Log::create([
             'user_id' => auth()->id(),
             'type' => "info",
-            'details' => "You created a new user"
+            'details' => "You created a new user named <a href='userdetails.php?id=$user->id'>$user->name</a>"
         ]);
+        $this->resetExcept();
         session()->flash('user_add_message', 'User added successfully!');
     }
     public function userDelete($id)

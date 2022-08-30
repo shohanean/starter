@@ -66,11 +66,7 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Input group-->
-
-
-                    {{-- I will use later --}}
-
-                    {{-- <!--begin::Input group-->
+                    <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Company</label>
@@ -100,11 +96,36 @@
                     <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Company Site</label>
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Country</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            <input type="text" name="website" class="form-control form-control-lg form-control-solid" placeholder="Company website" value="keenthemes.com">
+                            <select wire:model="country_id" class="form-select">
+                                <option value="">-Select One Country-</option>
+                                @foreach ($countries as $country)
+                                    <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row mb-6">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">City</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8 fv-row">
+                            {{ $cities }}
+                            <select name="" class="form-select">
+                                <option value="">-Select One City-</option>
+                                {{-- @forelse ($cities as $city)
+                                    <option value="">{{ $city }}</option>
+                                @empty
+
+                                @endforelse --}}
+                            </select>
                         </div>
                         <!--end::Col-->
                     </div>
@@ -150,7 +171,7 @@
                         </div>
                         <!--begin::Label-->
                     </div>
-                    <!--end::Input group--> --}}
+                    <!--end::Input group-->
                 </div>
                 <!--end::Card body-->
                 <!--begin::Actions-->

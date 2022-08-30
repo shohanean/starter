@@ -7,6 +7,8 @@ use App\Models\Log;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+use Khsing\World\World;
+use Khsing\World\Models\Country;
 
 class Edit extends Component
 {
@@ -19,10 +21,17 @@ class Edit extends Component
     public $random_code;
     public $disabled;
 
+    public $country_id = "cn";
+    public $cities;
+
     public function mount()
     {
         $this->random_code = rand(11111,99999);
         $this->avatar_link = auth()->user()->avatar;
+    }
+    public function booted()
+    {
+        $this->cities = Country::getByCode($this->country_id);
     }
     public function save()
     {
@@ -65,6 +74,8 @@ class Edit extends Component
     }
     public function render()
     {
-        return view('livewire.profile.edit');
+        return view('livewire.profile.edit',[
+            'countries' => World::Countries()
+        ]);
     }
 }
