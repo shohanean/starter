@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Profile;
 
 use App\Models\User;
+use App\Models\Log;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
@@ -34,6 +35,12 @@ class Edit extends Component
             'avatar' => $upload_name
         ]);
         $this->avatar_link = $upload_name;
+
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "success",
+            'details' => "You changed your avatar"
+        ]);
         session()->flash('success', 'Avatar successfully updated.');
     }
     public function checker()
@@ -48,6 +55,11 @@ class Edit extends Component
     public function deleteaccount()
     {
         User::find(auth()->id())->delete();
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "danger",
+            'details' => "You deleted your account"
+        ]);
         Auth::logout();
         return redirect('/');
     }

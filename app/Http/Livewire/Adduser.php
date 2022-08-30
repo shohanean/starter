@@ -6,6 +6,7 @@ use Livewire\Component;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use App\Models\Log;
 use Carbon\Carbon;
 
 class Adduser extends Component
@@ -34,6 +35,11 @@ class Adduser extends Component
 
         $user->assignRole($this->role_name);
         $this->resetExcept();
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "info",
+            'details' => "You created a new user"
+        ]);
         session()->flash('user_add_message', 'User added successfully!');
     }
     public function userDelete($id)
