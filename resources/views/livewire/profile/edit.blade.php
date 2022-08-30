@@ -103,7 +103,10 @@
                             <select wire:model="country_id" class="form-select">
                                 <option value="">-Select One Country-</option>
                                 @foreach ($countries as $country)
+                                @if ($country->code == "bd")
                                     <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                    @break
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -117,14 +120,15 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            {{ $cities }}
-                            <select name="" class="form-select">
-                                <option value="">-Select One City-</option>
-                                {{-- @forelse ($cities as $city)
-                                    <option value="">{{ $city }}</option>
-                                @empty
-
-                                @endforelse --}}
+                            <select class="form-select" @if (empty($cities)) disabled @endif>
+                                @if (!empty($cities))
+                                    <option value="">-Choose One City-</option>
+                                    @foreach ($cities as $city)
+                                        <option value="">{{ $city->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">-Choose Country First-</option>
+                                @endif
                             </select>
                         </div>
                         <!--end::Col-->

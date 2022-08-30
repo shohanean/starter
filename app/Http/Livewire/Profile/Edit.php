@@ -21,7 +21,7 @@ class Edit extends Component
     public $random_code;
     public $disabled;
 
-    public $country_id = "cn";
+    public $country_id;
     public $cities;
 
     public function mount()
@@ -29,9 +29,17 @@ class Edit extends Component
         $this->random_code = rand(11111,99999);
         $this->avatar_link = auth()->user()->avatar;
     }
-    public function booted()
+    public function updatedCountryId()
     {
-        $this->cities = Country::getByCode($this->country_id);
+        // if you want to get divisions list then active below code
+        // $this->cities = Country::getByCode($this->country_id)->divisions()->get();
+
+        if ($this->country_id != "") {
+            $this->cities = Country::getByCode($this->country_id)->children();
+        }
+        else{
+            $this->cities = [];
+        }
     }
     public function save()
     {
