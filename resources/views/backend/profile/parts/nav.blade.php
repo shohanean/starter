@@ -18,7 +18,7 @@
                     <div class="d-flex flex-column">
                         <!--begin::Name-->
                         <div class="d-flex align-items-center mb-2">
-                            <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ auth()->user()->name }}</a>
+                            <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{ $name }}</a>
                             @isset(auth()->user()->email_verified_at)
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
                                 <span class="svg-icon svg-icon-1 svg-icon-primary">
@@ -62,9 +62,21 @@
                     <!--end::User-->
                     <!--begin::Actions-->
                     <div class="d-flex my-4">
-                        <i class="text-primary fab fa-facebook fa-2x p-2"></i>
-                        <i class="text-danger fab fa-instagram fa-2x p-2"></i>
-                        <i class="text-primary fab fa-linkedin fa-2x p-2"></i>
+                        @if ($fb_link)
+                            <a href="{{ $fb_link }}" target="_blank">
+                                <i class="text-primary fab fa-facebook fa-2x p-2"></i>
+                            </a>
+                        @endif
+                        @if ($ig_link)
+                            <a href="{{ $ig_link }}" target="_blank">
+                                <i class="text-danger fab fa-instagram fa-2x p-2"></i>
+                            </a>
+                        @endif
+                        @if ($li_link)
+                            <a href="{{ $li_link }}" target="_blank">
+                                <i class="text-primary fab fa-linkedin fa-2x p-2"></i>
+                            </a>
+                        @endif
                     </div>
                     <!--end::Actions-->
                 </div>

@@ -87,8 +87,9 @@
                 <!--end::Label-->
                 <!--begin::Col-->
                 <div class="col-lg-8 d-flex align-items-center">
-                    <span class="fw-bold fs-6 text-gray-800 me-2">044 3276 454 935</span>
+                    <span class="fw-bold fs-6 text-gray-800 me-2">{{ $phone_number ?? '-' }}</span>
                     <span class="badge badge-success">Verified</span>
+                    <span class="badge badge-danger">No</span>
                 </div>
                 <!--end::Col-->
             </div>
@@ -100,7 +101,7 @@
                 <!--end::Label-->
                 <!--begin::Col-->
                 <div class="col-lg-8">
-                    <a href="#" class="fw-semibold fs-6 text-gray-800 text-hover-primary">Dhaka</a>
+                    <a href="#" class="fw-semibold fs-6 text-gray-800 text-hover-primary">{{ $address ?? '-' }}</a>
                 </div>
                 <!--end::Col-->
             </div>
@@ -108,12 +109,35 @@
             <!--begin::Input group-->
             <div class="row mb-7">
                 <!--begin::Label-->
-                <label class="col-lg-4 fw-semibold text-muted">Country
-                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" aria-label="Country of origination" data-kt-initialized="1"></i></label>
+                <label class="col-lg-4 fw-semibold text-muted">City</label>
                 <!--end::Label-->
                 <!--begin::Col-->
                 <div class="col-lg-8">
-                    <span class="fw-bold fs-6 text-gray-800">Bangladesh</span>
+                    <span class="fw-bold fs-6 text-gray-800">
+                        @if ($city_id)
+                            {{ Khsing\World\World::getByCode($country_id)->children()->where('id', $city_id)->first()->name }}
+                        @else
+                        -
+                        @endif
+                    </span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Country</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">
+                        @if ($country_id)
+                            {{ Khsing\World\World::getByCode($country_id)->name }}
+                        @else
+                        -
+                        @endif
+                    </span>
                 </div>
                 <!--end::Col-->
             </div>

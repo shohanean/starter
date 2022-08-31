@@ -20,16 +20,16 @@
                 <div class="card-body border-top p-9">
                     <!--begin::Input group-->
                     <div class="row mb-6">
+                        @if (session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label fw-semibold fs-6">Avatar</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
-                            @if (session()->has('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
                             <!--begin::Image input-->
                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('dashboard_assets/media/svg/avatars/blank.svg') }})">
                                 <!--begin::Preview existing avatar-->
@@ -73,7 +73,7 @@
                             <label class="fs-6 required fw-bold mb-2">Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="" value="{{ auth()->user()->name }}">
+                            <input wire:model="name" type="text" class="form-control form-control-lg" placeholder="Name" value="{{ $name }}">
                             @error ('name')
                                 <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -85,7 +85,7 @@
                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" aria-label="Phone number must be active" data-kt-initialized="1"></i>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="Phone Number" value="">
+                            <input wire:model="phone_number" type="text" class="form-control form-control-lg" placeholder="Phone Number" value="{{ $phone_number }}">
                             <!--end::Input-->
                         </div>
                     </div>
@@ -98,10 +98,12 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <select wire:model="country_id" class="form-select">
-                                <option value="">-Select One Country-</option>
+                                @if (!$country_id)
+                                    <option value="">-Select One Country-</option>
+                                @endif
                                 @foreach ($countries as $country)
                                 @if ($country->code == "bd")
-                                    <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                    <option {{ ($country->code == $country_id) ? 'selected':'' }} value="{{ $country->code }}">{{ $country->name }}</option>
                                     @break
                                 @endif
                                 @endforeach
@@ -113,11 +115,11 @@
                             <label class="fs-6 fw-bold mb-2">City</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select class="form-select" @if (empty($cities)) disabled @endif>
+                            <select wire:model="city_id" class="form-select" @if (empty($cities)) disabled @endif>
                                 @if (!empty($cities))
                                     <option value="">-Choose One City-</option>
                                     @foreach ($cities as $city)
-                                        <option value="">{{ $city->name }}</option>
+                                        <option {{ ($city->id == $city_id) ? 'selected':'' }} value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
                                 @else
                                     <option value="">-Choose Country First-</option>
@@ -134,7 +136,7 @@
                             <label class="fs-6 fw-bold mb-2">Address</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea wire:model="address" class="form-control form-control-lg" rows="2"></textarea>
+                            <textarea wire:ignore wire:model="address" class="form-control form-control-lg" rows="2">{{ $address }}</textarea>
                             {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
                             <!--end::Input-->
                         </div>
@@ -150,7 +152,7 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="Facebook Profile Link" value="">
+                            <input wire:model="fb_link" type="text" class="form-control form-control-lg" placeholder="Facebook Profile Link" value="{{ $fb_link }}">
                             <!--end::Input-->
                         </div>
                         <div class="fv-row col-lg-4">
@@ -161,7 +163,7 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="Instagram Profile Link" value="">
+                            <input wire:model="ig_link" type="text" class="form-control form-control-lg" placeholder="Instagram Profile Link" value="{{ $ig_link }}">
                             <!--end::Input-->
                         </div>
                         <div class="fv-row col-lg-4">
@@ -172,7 +174,7 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="Linkedin Profile Link" value="">
+                            <input wire:model="li_link" type="text" class="form-control form-control-lg" placeholder="Linkedin Profile Link" value="{{ $li_link }}">
                             <!--end::Input-->
                         </div>
                     </div>

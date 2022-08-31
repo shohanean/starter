@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Profile;
 
 use App\Models\User;
 use App\Models\Log;
+use App\Models\Profile;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
@@ -26,10 +27,31 @@ class Edit extends Component
     public $country_id;
     public $cities;
 
+    public $phone_number;
+    public $city_id;
+    public $address;
+    public $fb_link;
+    public $ig_link;
+    public $li_link;
+
     public function mount()
     {
         $this->random_code = rand(11111,99999);
         $this->avatar_link = auth()->user()->avatar;
+        $this->name = auth()->user()->name;
+        if(Profile::where('user_id', auth()->id())->exists()){
+            $profile_info = Profile::where('user_id', auth()->id())->first();
+            $this->phone_number = $profile_info->phone_number;
+            $this->country_id = $profile_info->country_id;
+            $this->city_id = $profile_info->city_id;
+            $this->address = $profile_info->address;
+            $this->fb_link = $profile_info->fb_link;
+            $this->ig_link = $profile_info->ig_link;
+            $this->li_link = $profile_info->li_link;
+        }
+        if($this->country_id){
+            $this->cities = Country::getByCode($this->country_id)->children();
+        }
     }
     public function updatedCountryId()
     {
@@ -46,22 +68,40 @@ class Edit extends Component
     public function save()
     {
         $this->validate([
-            'avatar' => 'required|image|max:1024', // 1MB Max
+            'avatar' => 'nullable|image|max:1024', // 1MB Max
             'name' => 'required',
         ]);
+        if($this->avatar){
+            $upload_name = $this->avatar->store('avatars');
+            User::find(auth()->id())->update([
+                'avatar' => $upload_name
+            ]);
+            $this->avatar_link = $upload_name;
 
-        $upload_name = $this->avatar->store('avatars');
+            Log::create([
+                'user_id' => auth()->id(),
+                'type' => "success",
+                'details' => "You changed your avatar"
+            ]);
+        }
         User::find(auth()->id())->update([
-            'avatar' => $upload_name
+            'name' => $this->name
         ]);
-        $this->avatar_link = $upload_name;
-
-        Log::create([
-            'user_id' => auth()->id(),
-            'type' => "success",
-            'details' => "You changed your avatar"
-        ]);
-        session()->flash('success', 'Avatar successfully updated.');
+        Profile::updateOrCreate(
+            [
+                'user_id'   => auth()->id(),
+            ],
+            [
+                'phone_number' => $this->phone_number,
+                'country_id' => $this->country_id,
+                'city_id' => $this->city_id,
+                'address' => $this->address,
+                'fb_link' => $this->fb_link,
+                'ig_link' => $this->ig_link,
+                'li_link' => $this->li_link,
+            ],
+        );
+        session()->flash('success', 'Profile successfully updated.');
     }
     public function checker()
     {
