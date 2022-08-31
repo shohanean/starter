@@ -26,7 +26,8 @@
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
     </div>
     <!--end::Separator-->
-    <!--begin::Input group-->
+    <input type="hidden" value="{{ "User".Str::upper(Str::random(6)) }}" name="name">
+    {{-- <!--begin::Input group-->
     <div class="fv-row mb-7">
         <label class="form-label fw-bolder text-dark fs-6">Name</label>
         <input class="@error('name') is-invalid @enderror form-control form-control-lg form-control-solid" type="text" placeholder="" name="name" autocomplete="off" value="{{ old('name') }}"/>
@@ -34,7 +35,8 @@
             <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-    <!--end::Input group-->
+    <!--end::Input group--> --}}
+
     <!--begin::Input group-->
     <div class="fv-row mb-7">
         <label class="form-label fw-bolder text-dark fs-6">Email</label>

@@ -59,7 +59,7 @@
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
                             @error('avatar')
-                                <span class="text-danger">{{ $message }}</span>
+                                <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
                             @enderror
                             <!--end::Hint-->
                         </div>
@@ -67,39 +67,37 @@
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                            <input type="text" name="company" class="form-control form-control-lg" placeholder="Name" value="{{ auth()->user()->name }}">
-                        <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
-                            <span class="required">Contact Phone</span>
+                    <div class="row mb-8">
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 required fw-bold mb-2">Name</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-lg" placeholder="" value="{{ auth()->user()->name }}">
+                            @error ('name')
+                                <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 required fw-bold mb-2">Phone Number</label>
                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" aria-label="Phone number must be active" data-kt-initialized="1"></i>
-                        </label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                            <input type="tel" name="phone" class="form-control form-control-lg" placeholder="Phone number" value="">
-                        <div class="fv-plugins-message-container invalid-feedback"></div></div>
-                        <!--end::Col-->
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-lg" placeholder="Instagram Link" value="">
+                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <!--end::Input-->
+                        </div>
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Country</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row">
+                    <div class="row mb-8">
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">Country</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
                             <select wire:model="country_id" class="form-select">
                                 <option value="">-Select One Country-</option>
                                 @foreach ($countries as $country)
@@ -109,17 +107,13 @@
                                 @endif
                                 @endforeach
                             </select>
+                            <!--end::Input-->
                         </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-                    <div class="row mb-6">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">City</label>
-                        <!--end::Label-->
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row">
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">City</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
                             <select class="form-select" @if (empty($cities)) disabled @endif>
                                 @if (!empty($cities))
                                     <option value="">-Choose One City-</option>
@@ -130,11 +124,52 @@
                                     <option value="">-Choose Country First-</option>
                                 @endif
                             </select>
+                            <!--end::Input-->
                         </div>
-                        <!--end::Col-->
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
+                    <div class="row mb-8">
+                        <div class="fv-row col-lg-12">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">Address</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <textarea wire:model="address" class="form-control form-control-lg" rows="2"></textarea>
+                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <!--end::Input-->
+                        </div>
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="row mb-8">
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <i class="text-primary fab fa-facebook p-2"></i>
+                                Facebook Profile Link
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-lg" placeholder="Facebook Profile Link" value="">
+                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row col-lg-6">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <i class="text-danger fab fa-instagram p-2"></i>
+                                Instagram Profile Link
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-lg" placeholder="Instagram Profile Link" value="">
+                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <!--end::Input-->
+                        </div>
+                    </div>
+                    <!--end::Input group-->
+                    {{-- <!--begin::Input group-->
                     <div class="row mb-6">
                         <!--begin::Label-->
                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">Communication</label>
@@ -160,11 +195,11 @@
                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <!--end::Col-->
                     </div>
-                    <!--end::Input group-->
+                    <!--end::Input group--> --}}
                     <!--begin::Input group-->
                     <div class="row mb-0">
                         <!--begin::Label-->
-                        <label class="col-lg-4 col-form-label fw-semibold fs-6">Allow Marketing</label>
+                        <label class="col-lg-4 col-form-label fw-semibold fs-6">I Want to Received Marketing SMS</label>
                         <!--begin::Label-->
                         <!--begin::Label-->
                         <div class="col-lg-8 d-flex align-items-center">

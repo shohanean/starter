@@ -17,6 +17,8 @@ class Edit extends Component
     public $avatar;
     public $avatar_link;
 
+    public $name;
+
     public $typed_code;
     public $random_code;
     public $disabled;
@@ -45,6 +47,7 @@ class Edit extends Component
     {
         $this->validate([
             'avatar' => 'required|image|max:1024', // 1MB Max
+            'name' => 'required',
         ]);
 
         $upload_name = $this->avatar->store('avatars');

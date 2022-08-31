@@ -56,7 +56,12 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        return view('backend.profile.edit');
+        if(auth()->id() == $id){
+            return view('backend.profile.edit');
+        }
+        else{
+            return abort(404);
+        }
     }
 
     /**
