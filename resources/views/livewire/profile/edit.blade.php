@@ -81,12 +81,11 @@
                         </div>
                         <div class="fv-row col-lg-6">
                             <!--begin::Label-->
-                            <label class="fs-6 required fw-bold mb-2">Phone Number</label>
+                            <label class="fs-6 fw-bold mb-2">Phone Number</label>
                             <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" aria-label="Phone number must be active" data-kt-initialized="1"></i>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-lg" placeholder="Instagram Link" value="">
-                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <input type="text" class="form-control form-control-lg" placeholder="Phone Number" value="">
                             <!--end::Input-->
                         </div>
                     </div>
@@ -143,7 +142,7 @@
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="row mb-8">
-                        <div class="fv-row col-lg-6">
+                        <div class="fv-row col-lg-4">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
                                 <i class="text-primary fab fa-facebook p-2"></i>
@@ -152,10 +151,9 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-lg" placeholder="Facebook Profile Link" value="">
-                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
                             <!--end::Input-->
                         </div>
-                        <div class="fv-row col-lg-6">
+                        <div class="fv-row col-lg-4">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
                                 <i class="text-danger fab fa-instagram p-2"></i>
@@ -164,7 +162,17 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-lg" placeholder="Instagram Profile Link" value="">
-                            {{-- <div class="fv-plugins-message-container invalid-feedback">Error message Here</div> --}}
+                            <!--end::Input-->
+                        </div>
+                        <div class="fv-row col-lg-4">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <i class="text-primary fab fa-linkedin p-2"></i>
+                                Linkedin Profile Link
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-lg" placeholder="Linkedin Profile Link" value="">
                             <!--end::Input-->
                         </div>
                     </div>
@@ -195,7 +203,7 @@
                         <div class="fv-plugins-message-container invalid-feedback"></div></div>
                         <!--end::Col-->
                     </div>
-                    <!--end::Input group--> --}}
+                    <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="row mb-0">
                         <!--begin::Label-->
@@ -210,7 +218,7 @@
                         </div>
                         <!--begin::Label-->
                     </div>
-                    <!--end::Input group-->
+                    <!--end::Input group--> --}}
                 </div>
                 <!--end::Card body-->
                 <!--begin::Actions-->
