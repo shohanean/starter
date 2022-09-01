@@ -1,5 +1,9 @@
 @extends('layouts.dashboard')
 
+@section('profile.index')
+active
+@endsection
+
 @section('toolbar')
     @includeIf('parts.toolbar', [
         'links' => [

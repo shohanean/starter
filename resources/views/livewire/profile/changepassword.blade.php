@@ -1,5 +1,5 @@
 <div>
-    {{-- @include('backend.profile.parts.nav') --}}
+    @include('backend.profile.parts.nav')
     <!--begin::Basic info-->
     <div class="card mb-5 mb-xl-10">
         <!--begin::Card header-->
@@ -18,6 +18,11 @@
                 <!--begin::Card body-->
                 <div class="card-body border-top p-9">
                     <!--begin::Input group-->
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="row mb-8">
                         <div class="fv-row col-lg-4">
                             <!--begin::Label-->
@@ -27,8 +32,11 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="current_password" type="text" class="form-control form-control-lg" placeholder="Current Password">
+                            <input wire:model="current_password" type="password" class="form-control form-control-lg" placeholder="Current Password">
                             <!--end::Input-->
+                            @if ($disabled == 'disabled')
+                                <span class="badge text-danger">Type your correct current password first</span>
+                            @endif
                         </div>
                         <div class="fv-row col-lg-4">
                             <!--begin::Label-->
@@ -38,8 +46,11 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="password" type="text" class="form-control form-control-lg" placeholder="New Password">
+                            <input {{ $disabled }} wire:model="password" type="password" class="form-control form-control-lg" placeholder="New Password">
                             <!--end::Input-->
+                            @error('password')
+                                <span class="badge text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="fv-row col-lg-4">
                             <!--begin::Label-->
@@ -49,8 +60,11 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="password_confirmation" type="text" class="form-control form-control-lg" placeholder="Current Password">
+                            <input {{ $disabled }} wire:model="password_confirmation" type="password" class="form-control form-control-lg" placeholder="Current Password">
                             <!--end::Input-->
+                            @error('password_confirmation')
+                                <span class="badge text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <!--end::Input group-->
@@ -58,7 +72,7 @@
                 <!--end::Card body-->
                 <!--begin::Actions-->
                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    <button {{ $disabled }} type="submit" class="btn btn-primary">Change Password</button>
                 </div>
                 <!--end::Actions-->
                 <input type="hidden">
