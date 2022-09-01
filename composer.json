@@ -34,6 +34,9 @@
         "sven/artisan-view": "^3.5"
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
