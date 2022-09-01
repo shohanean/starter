@@ -13,6 +13,7 @@ class Index extends Component
     public $loadolder_btn;
     public $name;
     public $phone_number;
+    public $phone_number_verified;
     public $country_id;
     public $address;
     public $city_id;
@@ -27,6 +28,7 @@ class Index extends Component
         if(Profile::where('user_id', auth()->id())->exists()){
             $profile_info = Profile::where('user_id', auth()->id())->first();
             $this->phone_number = $profile_info->phone_number;
+            $this->phone_number_verified = $profile_info->phone_number_verified;
             $this->country_id = $profile_info->country_id;
             $this->city_id = $profile_info->city_id;
             $this->address = $profile_info->address;

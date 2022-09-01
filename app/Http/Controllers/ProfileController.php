@@ -45,7 +45,12 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        if(auth()->id() == $id){
+            return view('backend.profile.show');
+        }
+        else{
+            return abort(404);
+        }
     }
 
     /**

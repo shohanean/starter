@@ -88,8 +88,17 @@
                 <!--begin::Col-->
                 <div class="col-lg-8 d-flex align-items-center">
                     <span class="fw-bold fs-6 text-gray-800 me-2">{{ $phone_number ?? '-' }}</span>
-                    <span class="badge badge-success">Verified</span>
-                    <span class="badge badge-danger">No</span>
+                    @if ($phone_number_verified)
+                        <span class="badge badge-success">Verified</span>
+                    @else
+                        <span class="badge badge-danger">Not Verified Yet</span>
+                        <a href="">
+                            <span class="badge badge-info">
+                                <i class="fa fa-paper-plane"></i>
+                                Send Verification Code
+                            </span>
+                        </a>
+                    @endif
                 </div>
                 <!--end::Col-->
             </div>

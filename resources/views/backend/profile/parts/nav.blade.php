@@ -182,7 +182,7 @@
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="">Security</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ (Request::route()->getName() == 'profile.show' ? 'active': '') }}" href="{{ route('profile.show', auth()->id()) }}">Change Password</a>
             </li>
             <!--end::Nav item-->
         </ul>
