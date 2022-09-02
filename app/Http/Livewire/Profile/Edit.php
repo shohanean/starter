@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 use Khsing\World\World;
 use Khsing\World\Models\Country;
+use Illuminate\Support\Facades\Storage;
 
 class Edit extends Component
 {
@@ -73,6 +74,10 @@ class Edit extends Component
         ]);
         if($this->avatar){
             $upload_name = $this->avatar->store('avatars');
+            // if old photo available then delete it first
+            if(auth()->user()->avatar){
+                Storage::delete(auth()->user()->avatar);
+            }
             User::find(auth()->id())->update([
                 'avatar' => $upload_name
             ]);
