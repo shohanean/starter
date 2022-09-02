@@ -81,6 +81,7 @@
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion">
+                                        @canany(['can add user','can see user list'])
 										<div class="menu-item">
 											<a class="menu-link  @yield('user.index')" href="{{ route('user.index') }}">
 												<span class="menu-bullet">
@@ -89,6 +90,7 @@
 												<span class="menu-title">Users</span>
 											</a>
 										</div>
+                                        @endcan
 										<div class="menu-item">
 											<a class="menu-link @yield('role.index')" href="{{ route('role.index') }}">
 												<span class="menu-bullet">
