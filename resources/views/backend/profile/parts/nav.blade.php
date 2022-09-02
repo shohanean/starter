@@ -95,7 +95,7 @@
                                 </div>
                                 <!--end::Number-->
                                 <!--begin::Label-->
-                                <div class="fw-bold fs-6 text-gray-400">Earnings</div>
+                                <div class="fw-bold fs-6 text-gray-400">Reserved</div>
                                 <!--end::Label-->
                             </div>
                             <!--end::Stat-->
@@ -107,7 +107,7 @@
                                 </div>
                                 <!--end::Number-->
                                 <!--begin::Label-->
-                                <div class="fw-bold fs-6 text-gray-400">Projects</div>
+                                <div class="fw-bold fs-6 text-gray-400">Reserved</div>
                                 <!--end::Label-->
                             </div>
                             <!--end::Stat-->
@@ -119,7 +119,7 @@
                                 </div>
                                 <!--end::Number-->
                                 <!--begin::Label-->
-                                <div class="fw-bold fs-6 text-gray-400">Success Rate</div>
+                                <div class="fw-bold fs-6 text-gray-400">Reserved</div>
                                 <!--end::Label-->
                             </div>
                             <!--end::Stat-->
