@@ -92,12 +92,12 @@
                         <span class="badge badge-success">Verified</span>
                     @else
                         <span class="badge badge-danger">Not Verified Yet</span>
-                        <a href="">
+                        {{-- <a href="">
                             <span class="badge badge-info">
                                 <i class="fa fa-paper-plane"></i>
                                 Send Verification Code
                             </span>
-                        </a>
+                        </a> --}}
                     @endif
                 </div>
                 <!--end::Col-->

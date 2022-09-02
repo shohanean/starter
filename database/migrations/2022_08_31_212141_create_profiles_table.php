@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('user_id');
             $table->string('phone_number')->nullable();
-            $table->string('phone_number_verified')->default(false);
+            $table->boolean('phone_number_verified')->default(true);
             $table->string('country_id')->nullable();
             $table->integer('city_id')->nullable();
             $table->text('address')->nullable();
