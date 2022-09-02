@@ -185,7 +185,7 @@
                                     @endforelse
                                 </td>
                                 <td class="text-end">
-                                    @if ($user->getRoleNames()->first() != "Super Admin")
+                                    @if ($user->id != 1)
                                         <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
                                         <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">
                                             Delete
