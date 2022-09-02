@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Profile;
 
+use App\Models\Log;
 use App\Models\User;
 use App\Models\Profile;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -46,7 +48,13 @@ class Changepassword extends Component
         ]);
 
         User::find(auth()->id())->update([
-            'password' => bcrypt($this->password)
+            'password' => bcrypt($this->password),
+            'password_changed_at' => Carbon::now()
+        ]);
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "warning",
+            'details' => "You set a new password"
         ]);
         $this->reset();
         session()->flash('success', 'New password set successfully!.');

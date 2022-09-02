@@ -151,6 +151,24 @@
                 <!--end::Col-->
             </div>
             <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Last Password Changed</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">
+                        @if (auth()->user()->password_changed_at)
+                            <span class="badge bg-success">{{ \Carbon\Carbon::parse(auth()->user()->password_changed_at)->diffForHumans() }}</span>
+                        @else
+                            <span class="badge bg-dark">Never</span>
+                        @endif
+                    </span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
         </div>
         <!--end::Card body-->
     </div>
