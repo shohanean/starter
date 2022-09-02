@@ -123,14 +123,16 @@
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">System</span>
 									</div>
 								</div>
-								<div class="menu-item">
-									<a class="menu-link @yield('backup.index')" href="{{ route('backup.index') }}">
-										<span class="menu-icon">
-                                            <i class="fa fa-database"></i>
-										</span>
-										<span class="menu-title">Backup</span>
-									</a>
-								</div>
+                                @can ('can take backup')
+    								<div class="menu-item">
+    									<a class="menu-link @yield('backup.index')" href="{{ route('backup.index') }}">
+    										<span class="menu-icon">
+                                                <i class="fa fa-database"></i>
+    										</span>
+    										<span class="menu-title">Backup</span>
+    									</a>
+    								</div>
+                                @endcan
 								<div class="menu-item">
 									<div class="menu-content">
 										<div class="separator mx-1 my-4"></div>

@@ -98,7 +98,7 @@
         @endforelse
     @else
         <div class="col-md-4">
-            <div class="alert alert-danger">You don't have the permission to see this part</div>
+            @include('backend.inc.alert.no_permission')
         </div>
     @endcan
 </div>

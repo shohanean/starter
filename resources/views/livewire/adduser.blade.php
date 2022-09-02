@@ -103,7 +103,7 @@
                         <!--end::Billing address-->
                     </form>
                 @else
-                    <div class="alert alert-danger">You don't have the permission to see this part</div>
+                    @include('backend.inc.alert.no_permission')
                 @endcan
             </div>
             <!--end::Card body-->
@@ -211,7 +211,7 @@
                 </div>
                 <!--end::Table container-->
             @else
-                <div class="alert alert-danger">You don't have the permission to see this part</div>
+                @include('backend.inc.alert.no_permission')
             @endcan
         </div>
         <!--begin::Body-->
