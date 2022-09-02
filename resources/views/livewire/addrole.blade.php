@@ -1,95 +1,106 @@
 <div>
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-5 g-xl-9">
-    <!--begin::Add new card-->
-    <div class="ol-md-4">
-        <!--begin::Card-->
-        <div class="card h-md-100">
-            <!--begin::Card body-->
-            <div class="card-body d-flex flex-center">
-                <!--begin::Button-->
-                <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
-                    <!--begin::Illustration-->
-                    <img src="{{ asset('dashboard_assets/media/illustrations/sketchy-1/4.png') }}" alt="not found" class="mw-100 mh-150px mb-7">
-                    <!--end::Illustration-->
-                    <!--begin::Label-->
-                    <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">Add New Role</div>
-                    <!--end::Label-->
-                </button>
-                <!--begin::Button-->
-            </div>
-            <!--begin::Card body-->
-        </div>
-        <!--begin::Card-->
-    </div>
-    <!--begin::Add new card-->
-    @forelse ($roles as $role)
-        <!--begin::Col-->
-        <div class="col-md-4">
+    @can ('can add role')
+        <!--begin::Add new card-->
+        <div class="ol-md-4">
             <!--begin::Card-->
-            <div class="card card-flush h-md-100">
-                <!--begin::Card header-->
-                <div class="card-header justify-content-end ribbon ribbon-start ribbon-clip">
-                    <div class="ribbon-label">Total Users: {{ $role->users->count() }}
-                    <span class="ribbon-inner bg-info"></span></div>
-                    <div class="card-title">{{ $role->name }}</div>
-                </div>
-                <!--end::Card header-->
+            <div class="card h-md-100">
                 <!--begin::Card body-->
-                <div class="card-body pt-1">
-                    <div class="symbol-group symbol-hover">
-                        @foreach ($role->users as $user)
-                            <div class="symbol symbol-circle symbol-30px" data-bs-toggle="popover" data-bs-placement="top" title="Name: {{ $user->name }}" data-bs-content="Email Address: {{ $user->email }}">
-                                <img src="{{ Avatar::create($user->name) }}" alt="not found">
-                            </div>
-                        @endforeach
-                    </div>
-                    <!--begin::Permissions-->
-                    <div class="d-flex flex-column text-gray-600">
-                        @forelse ($role->permissions->take(3) as $permission)
-                            <div class="d-flex align-items-center py-2">
-                                <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
-                            </div>
-                        @empty
-                            <div class="alert alert-warning mt-3" role="alert">
-                                There is no permission added to this role yet
-                            </div>
-                        @endforelse
-                        @if ($role->permissions->count() > 3)
-                            <div x-data="{ open: false }">
-                                <span x-show="!open">
-                                    <a style="cursor: pointer" @click="open = ! open" class="d-flex align-items-center py-2">
-                                        <i class="text-primary fa fa-plus"></i> &nbsp; <em>and {{ $role->permissions->count() - 3 }} more...</em>
-                                    </a>
-                                </span>
-                                <div x-show="open" @click.outside="open = false" x-transition>
-                                    @foreach ($role->permissions->skip(3) as $permission)
-                                    <div class="d-flex align-items-center py-2">
-                                        <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                    <!--end::Permissions-->
+                <div class="card-body d-flex flex-center">
+                    <!--begin::Button-->
+                    <button type="button" class="btn btn-clear d-flex flex-column flex-center" data-bs-toggle="modal" data-bs-target="#kt_modal_add_role">
+                        <!--begin::Illustration-->
+                        <img src="{{ asset('dashboard_assets/media/illustrations/sketchy-1/4.png') }}" alt="not found" class="mw-100 mh-150px mb-7">
+                        <!--end::Illustration-->
+                        <!--begin::Label-->
+                        <div class="fw-bolder fs-3 text-gray-600 text-hover-primary">Add New Role</div>
+                        <!--end::Label-->
+                    </button>
+                    <!--begin::Button-->
                 </div>
-                <!--end::Card body-->
-                <!--begin::Card footer-->
-                <div class="card-footer flex-wrap pt-0">
-                    @if ($role->users->count() == 0)
-                        <button wire:click="deleterole({{ $role->id }})" class="btn btn-sm btn-danger my-1 me-2">Delete Role</button>
-                    @endif
-                    <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
-                </div>
-                <!--end::Card footer-->
+                <!--begin::Card body-->
             </div>
-            <!--end::Card-->
+            <!--begin::Card-->
         </div>
-        <!--end::Col-->
-    @empty
-
-    @endforelse
-
+        <!--begin::Add new card-->
+    @endcan
+    @can('can see role list')
+        @forelse ($roles as $role)
+            <!--begin::Col-->
+            <div class="col-md-4">
+                <!--begin::Card-->
+                <div class="card card-flush h-md-100">
+                    <!--begin::Card header-->
+                    <div class="card-header justify-content-end ribbon ribbon-start ribbon-clip">
+                        <div class="ribbon-label">Total Users: {{ $role->users->count() }}
+                        <span class="ribbon-inner bg-info"></span></div>
+                        <div class="card-title">{{ $role->name }}</div>
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body pt-1">
+                        <div class="symbol-group symbol-hover">
+                            @foreach ($role->users as $user)
+                                <div class="symbol symbol-circle symbol-30px" data-bs-toggle="popover" data-bs-placement="top" title="Name: {{ $user->name }}" data-bs-content="Email Address: {{ $user->email }}">
+                                    <img src="{{ Avatar::create($user->name) }}" alt="not found">
+                                </div>
+                            @endforeach
+                        </div>
+                        <!--begin::Permissions-->
+                        <div class="d-flex flex-column text-gray-600">
+                            @forelse ($role->permissions->take(3) as $permission)
+                                <div class="d-flex align-items-center py-2">
+                                    <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
+                                </div>
+                            @empty
+                                <div class="alert alert-warning mt-3" role="alert">
+                                    There is no permission added to this role yet
+                                </div>
+                            @endforelse
+                            @if ($role->permissions->count() > 3)
+                                <div x-data="{ open: false }">
+                                    <span x-show="!open">
+                                        <a style="cursor: pointer" @click="open = ! open" class="d-flex align-items-center py-2">
+                                            <i class="text-primary fa fa-plus"></i> &nbsp; <em>and {{ $role->permissions->count() - 3 }} more...</em>
+                                        </a>
+                                    </span>
+                                    <div x-show="open" @click.outside="open = false" x-transition>
+                                        @foreach ($role->permissions->skip(3) as $permission)
+                                        <div class="d-flex align-items-center py-2">
+                                            <span class="bullet bg-primary me-3"></span> {{ Str::title($permission->name) }}
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        <!--end::Permissions-->
+                    </div>
+                    <!--end::Card body-->
+                    <!--begin::Card footer-->
+                    <div class="card-footer flex-wrap pt-0">
+                        @if ($role->users->count() == 0)
+                            @can('can delete role')
+                                <button wire:click="deleterole({{ $role->id }})" class="btn btn-sm btn-danger my-1 me-2">Delete Role</button>
+                            @endcan
+                        @endif
+                        @can ('can edit role')
+                            <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                        @endcan
+                    </div>
+                    <!--end::Card footer-->
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Col-->
+        @empty
+            Nothing to show
+        @endforelse
+    @else
+        <div class="col-md-4">
+            <div class="alert alert-danger">You don't have the permission to see this part</div>
+        </div>
+    @endcan
 </div>
 <!--begin::Modal - Add role-->
 <div wire:ignore.self class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
