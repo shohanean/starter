@@ -45,7 +45,22 @@ class Adduser extends Component
     public function userDelete($id)
     {
         User::findOrFail($id)->delete();
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "danger",
+            'details' => "You deleted a user"
+        ]);
         session()->flash('user_delete_message', 'User successfully deleted.');
+    }
+    public function userRestore($id)
+    {
+        User::withTrashed()->where('id', $id)->restore();
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "success",
+            'details' => "You restored a user"
+        ]);
+        session()->flash('user_delete_message', 'User restored successfully!.');
     }
     public function resetForm()
     {
@@ -56,7 +71,7 @@ class Adduser extends Component
         return view('livewire.adduser', [
             'permissions' => Permission::select('id','name')->get(),
             'roles' => Role::select('id','name')->with('users')->latest()->get(),
-            'users' => User::latest()->get()
+            'users' => User::withTrashed()->latest()->get()
         ]);
     }
 }

@@ -189,18 +189,26 @@
                                         @endforelse
                                     </td>
                                     <td class="text-end">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
                                         @if ($user->id != 1)
                                             @can ('can edit user')
                                                 <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
                                             @endcan
-                                            @can ('can delete user')
-                                                <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">
-                                                    Delete
+                                            @if (!empty($user->deleted_at))
+                                                <button wire:click="userRestore({{ $user->id }})" class="btn btn-bg-success text-white btn-active-color-primary btn-sm px-4 me-2">
+                                                    Restore
                                                 </button>
-                                            @endcan
+                                            @else
+                                                @can ('can delete user')
+                                                    <button wire:click="userDelete({{ $user->id }})" class="btn btn-bg-danger text-white btn-active-color-primary btn-sm px-4 me-2">
+                                                        Delete
+                                                    </button>
+                                                @endcan
+                                            @endif
                                         @else
                                             <span class="badge bg-secondary text-dark">Changes not allowed</span>
                                         @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
