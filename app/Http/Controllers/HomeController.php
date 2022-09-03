@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Permission::create([
+        //   'name' => 'can restore user'
+        // ]);
+        // User::find(1)->assignRole('Super Admin');
         return view('home',[
             'users' => User::latest()->paginate(10)
         ]);
