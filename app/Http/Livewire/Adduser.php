@@ -15,6 +15,9 @@ class Adduser extends Component
     public $email;
     public $password;
     public $role_name;
+    public $edit_btn_id;
+    public $role_dropdown;
+    public $ean;
 
     protected $rules = [
         'name' => 'required',
@@ -61,6 +64,21 @@ class Adduser extends Component
             'details' => "You restored a user"
         ]);
         session()->flash('user_delete_message', 'User restored successfully!.');
+    }
+    public function userEdit($id)
+    {
+        $this->edit_btn_id = $id;
+    }
+    public function updatedRoleDropdown($role_name)
+    {
+        $user = User::withTrashed()->where('id', $this->edit_btn_id)->first();
+        $user->syncRoles($role_name);
+        Log::create([
+            'user_id' => auth()->id(),
+            'type' => "info",
+            'details' => "You changed a user's role"
+        ]);
+        session()->flash('user_delete_message', 'Role changed successfully!.');
     }
     public function resetForm()
     {

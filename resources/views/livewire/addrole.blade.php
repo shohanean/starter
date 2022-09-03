@@ -79,14 +79,18 @@
                     <!--end::Card body-->
                     <!--begin::Card footer-->
                     <div class="card-footer flex-wrap pt-0">
-                        @if ($role->users->count() == 0)
-                            @can('can delete role')
-                                <button wire:click="deleterole({{ $role->id }})" class="btn btn-sm btn-danger my-1 me-2">Delete Role</button>
+                        @if ($role->name != 'Super Admin')
+                            @if ($role->users->count() == 0)
+                                @can('can delete role')
+                                    <button wire:click="deleterole({{ $role->id }})" class="btn btn-sm btn-danger my-1 me-2">Delete Role</button>
+                                @endcan
+                            @endif
+                            @can ('can edit role')
+                                <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
                             @endcan
+                        @else
+                            <div class="badge bg-secondary text-dark">Changes not allowed</div>
                         @endif
-                        @can ('can edit role')
-                            <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
-                        @endcan
                     </div>
                     <!--end::Card footer-->
                 </div>

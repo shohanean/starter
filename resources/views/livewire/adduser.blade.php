@@ -174,10 +174,22 @@
                                         </div>
                                     </td>
                                     <td>
+                                        {{ $ean }}
                                         @empty($user->getRoleNames()->first())
                                             <span class="badge bg-secondary text-dark">No Role</span>
+                                        @else
+                                            <span class="badge badge-lg badge-light-primary fw-bold my-2">{{ $user->getRoleNames()->first() }}</span>
                                         @endempty
-                                        <span class="badge badge-lg badge-light-primary fw-bold my-2">{{ $user->getRoleNames()->first() }}</span>
+                                        <br>
+                                        <div class="{{ ($edit_btn_id == $user->id) ? '':'d-none' }} border border-primary p-3 text-center">
+                                            <small>Change Role</small>
+                                            <select wire:model="role_dropdown" class="">
+                                                @foreach ($roles as $role)
+                                                    <option {{ ($user->getRoleNames()->first() == $role->name) ? 'selected':'' }} value="{{ $role->name }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
                                     </td>
                                     <td>
                                         @forelse ($user->getAllPermissions() as $permission)
@@ -192,7 +204,9 @@
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                         @if ($user->id != 1 && $user->id != auth()->id())
                                             @can ('can edit user')
-                                                <button class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
+                                                {{-- Edit Button Start --}}
+                                                <button wire:click="userEdit({{ $user->id }})" class="btn btn-bg-info text-white btn-active-color-primary btn-sm px-4">Edit</button>
+                                                {{-- Edit Button End --}}
                                             @endcan
                                             @if (!empty($user->deleted_at))
                                                 @can ('can restore user')
