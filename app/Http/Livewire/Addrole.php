@@ -42,7 +42,7 @@ class Addrole extends Component
     {
         return view('livewire.addrole', [
             'permissions' => Permission::select('id','name')->get(),
-            'roles' => Role::select('id','name')->with('users')->latest()->get()
+            'roles' => Role::withTrashed()->select('id','name')->with('users')->latest()->get()
         ]);
     }
 }
