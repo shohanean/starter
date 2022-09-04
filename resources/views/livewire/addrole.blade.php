@@ -271,14 +271,14 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input class="form-control form-control-solid" placeholder="Enter a role name" name="role_name" value="Developer" />
+                            <input class="form-control form-control-solid" placeholder="Enter a role name" name="role_name" value="dynamic">
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
                         <!--begin::Permissions-->
                         <div class="fv-row">
                             <!--begin::Label-->
-                            <label class="fs-5 fw-bolder form-label mb-2">Role Permissions</label>
+                            <label class="fs-5 fw-bolder form-label mb-2">Role's Permissions</label>
                             <!--end::Label-->
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
@@ -286,24 +286,16 @@
                                 <table class="table align-middle table-row-dashed fs-6 gy-5">
                                     <!--begin::Table body-->
                                     <tbody class="text-gray-600 fw-bold">
-                                        <!--begin::Table row-->
-                                        <tr>
-                                            <td class="text-gray-800">Administrator Access
-                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Allows a full access to the system"></i></td>
-                                            <td>
-                                                <!--begin::Checkbox-->
-                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
-                                                    <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
-                                                    <span class="form-check-label" for="kt_roles_select_all">Select all</span>
-                                                </label>
-                                                <!--end::Checkbox-->
-                                            </td>
-                                        </tr>
-                                        <!--end::Table row-->
+                                        @if($permissions->count() == 0)
+                                            <div class="alert alert-danger" role="alert">
+                                                There is no permission to show
+                                            </div>
+                                        @endif
+                                        @foreach ($permissions as $permission)
                                         <!--begin::Table row-->
                                         <tr>
                                             <!--begin::Label-->
-                                            <td class="text-gray-800">User Management</td>
+                                            <td class="text-gray-800">{{ Str::title($permission->name) }}</td>
                                             <!--end::Label-->
                                             <!--begin::Input group-->
                                             <td>
@@ -311,20 +303,8 @@
                                                 <div class="d-flex">
                                                     <!--begin::Checkbox-->
                                                     <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_read" />
-                                                        <span class="form-check-label">Read</span>
-                                                    </label>
-                                                    <!--end::Checkbox-->
-                                                    <!--begin::Checkbox-->
-                                                    <label class="form-check form-check-custom form-check-solid me-5 me-lg-20">
-                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_write" />
-                                                        <span class="form-check-label">Write</span>
-                                                    </label>
-                                                    <!--end::Checkbox-->
-                                                    <!--begin::Checkbox-->
-                                                    <label class="form-check form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="" name="user_management_create" />
-                                                        <span class="form-check-label">Create</span>
+                                                        <input class="form-check-input" type="checkbox" value="{{ $permission->name }}" name="">
+                                                        <span class="form-check-label">Select</span>
                                                     </label>
                                                     <!--end::Checkbox-->
                                                 </div>
@@ -333,6 +313,7 @@
                                             <!--end::Input group-->
                                         </tr>
                                         <!--end::Table row-->
+                                        @endforeach
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>
