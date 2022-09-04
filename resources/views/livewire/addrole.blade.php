@@ -178,21 +178,6 @@
                                             <div class="alert alert-danger" role="alert">
                                                 There is no permission to show
                                             </div>
-                                        @else
-                                            <!--begin::Table row-->
-                                            <tr>
-                                                <td class="text-gray-800">All Access
-                                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Allows a full access to the system"></i></td>
-                                                <td>
-                                                    <!--begin::Checkbox-->
-                                                    <label class="form-check form-check-custom form-check-solid me-9">
-                                                        <input wire:model="checked_status" value="checked" class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
-                                                        <span class="form-check-label" for="kt_roles_select_all">Select all</span>
-                                                    </label>
-                                                    <!--end::Checkbox-->
-                                                </td>
-                                            </tr>
-                                            <!--end::Table row-->
                                         @endif
                                         @foreach ($permissions as $permission)
                                             <!--begin::Table row-->
@@ -206,7 +191,7 @@
                                                     <div class="d-flex">
                                                         <!--begin::Checkbox-->
                                                         <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                            <input {{ $checked_status }} class="form-check-input" type="checkbox" value="{{ $permission->name }}" wire:model="permission">
+                                                            <input class="form-check-input" type="checkbox" value="{{ $permission->name }}" wire:model="permission">
                                                             <span class="form-check-label">Select</span>
                                                         </label>
                                                         <!--end::Checkbox-->

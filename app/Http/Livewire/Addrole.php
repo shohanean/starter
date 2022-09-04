@@ -11,16 +11,11 @@ use Illuminate\Support\Str;
 class Addrole extends Component
 {
     public $role_title;
-    public $checked_status = "";
     public $permission = [];
 
     protected $rules = [
         'role_title' => 'required|unique:roles,name'
     ];
-    public function selectall()
-    {
-        $this->checked_status = "checked";
-    }
     public function deleterole($id)
     {
         Role::findOrFail($id)->delete();

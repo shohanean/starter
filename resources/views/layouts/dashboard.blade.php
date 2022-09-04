@@ -92,7 +92,7 @@
                                                 </a>
                                             </div>
                                             @endcanany
-                                            @canany(['can role user','can see role list'])
+                                            @canany(['can add role','can see role list'])
                                             <div class="menu-item">
                                                 <a class="menu-link @yield('role.index')" href="{{ route('role.index') }}">
                                                     <span class="menu-bullet">

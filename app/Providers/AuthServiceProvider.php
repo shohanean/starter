@@ -36,5 +36,9 @@ class AuthServiceProvider extends ServiceProvider
         //     ->line('Click the button below to verify your email address.')
         //     ->action('Verify Now', $url);
         // });
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Super Admin') ? true : null;
+        });
     }
 }

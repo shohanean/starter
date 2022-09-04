@@ -240,52 +240,54 @@
     <!--end::Basic info-->
 
     <!--begin::Connected Accounts-->
-    <div class="card mb-5 mb-xl-10">
-        <!--begin::Card header-->
-        <div class="card-header border-0">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0">Account Setting</h3>
-            </div>
-        </div>
-        <!--end::Card header-->
-        <!--begin::Content-->
-        <div class="collapse show">
-            <!--begin::Card body-->
-            <div class="card-body border-top p-9">
-                <!--begin::Notice-->
-                <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed mb-9 p-6">
-                    <i class="fa fa-trash fa-2x text-danger p-3"></i>
-                    <!--begin::Wrapper-->
-                    <div class="d-flex flex-stack flex-grow-1">
-                        <!--begin::Content-->
-                        <div class="fw-semibold">
-                            <div class="fs-6">
-                                You can delete your account by typing the below generated code. Once you delete it, you won't be able to undo the action. Only super admin will be able to reactive your account.
-                                <span class="fw-bold text-danger">I am sure, I want to delete my account</span>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-md-4 p-1">
-                                    <button disabled="disabled" class="p-2 form-control btn btn-info">
-                                        <span class="h1 text-white">{{ $random_code }}</span>
-                                    </button>
-                                </div>
-                                <div class="col-md-4 p-1">
-                                    <input class="form-control" type="text" wire:model="typed_code" wire:keyup="checker">
-                                </div>
-                                <div class="col-md-4 p-1">
-                                    <button {{ ($disabled) ? '':'disabled' }} class="form-control btn btn-danger" wire:click="deleteaccount">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Wrapper-->
+    @if (!auth()->user()->hasRole('Super Admin'))
+        <div class="card mb-5 mb-xl-10">
+            <!--begin::Card header-->
+            <div class="card-header border-0">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Account Setting</h3>
                 </div>
-                <!--end::Notice-->
             </div>
-            <!--end::Card body-->
+            <!--end::Card header-->
+            <!--begin::Content-->
+            <div class="collapse show">
+                <!--begin::Card body-->
+                <div class="card-body border-top p-9">
+                    <!--begin::Notice-->
+                    <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed mb-9 p-6">
+                        <i class="fa fa-trash fa-2x text-danger p-3"></i>
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-stack flex-grow-1">
+                            <!--begin::Content-->
+                            <div class="fw-semibold">
+                                <div class="fs-6">
+                                    You can delete your account by typing the below generated code. Once you delete it, you won't be able to undo the action. Only super admin will be able to reactive your account.
+                                    <span class="fw-bold text-danger">I am sure, I want to delete my account</span>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-md-4 p-1">
+                                        <button disabled="disabled" class="p-2 form-control btn btn-info">
+                                            <span class="h1 text-white">{{ $random_code }}</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 p-1">
+                                        <input class="form-control" type="text" wire:model="typed_code" wire:keyup="checker">
+                                    </div>
+                                    <div class="col-md-4 p-1">
+                                        <button {{ ($disabled) ? '':'disabled' }} class="form-control btn btn-danger" wire:click="deleteaccount">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+                    <!--end::Notice-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Content-->
         </div>
-        <!--end::Content-->
-    </div>
+    @endif
     <!--end::Connected Accounts-->
 </div>

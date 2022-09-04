@@ -88,7 +88,7 @@ class Adduser extends Component
     {
         return view('livewire.adduser', [
             'permissions' => Permission::select('id','name')->get(),
-            'roles' => Role::select('id','name')->with('users')->latest()->get(),
+            'roles' => Role::whereNotIn('name', ['Super Admin'])->select('id','name')->with('users')->latest()->get(),
             'users' => User::withTrashed()->latest()->get()
         ]);
     }
