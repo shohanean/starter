@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Rolecustom;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Str;
@@ -42,7 +43,7 @@ class Addrole extends Component
     {
         return view('livewire.addrole', [
             'permissions' => Permission::select('id','name')->get(),
-            'roles' => Role::withTrashed()->select('id','name')->with('users')->latest()->get()
+            'roles' => Rolecustom::select('id','name')->with('users')->latest()->get()
         ]);
     }
 }
