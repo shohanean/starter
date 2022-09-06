@@ -319,8 +319,8 @@
                                                         <!--begin::Checkbox-->
                                                         <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
                                                             <input class="form-check-input" type="checkbox" wire:model="update_permissions" value="{{ $permission->name }}" {{ ($permissions_under_role->contains('name', $permission->name)) ? 'checked' : '' }}>
-                                                            <span class="form-check-label">
-                                                                Select
+                                                            <span class="form-check-label {{ ($permissions_under_role->contains('name', $permission->name)) ? 'badge bg-success' : '' }}">
+                                                                Select{{ ($permissions_under_role->contains('name', $permission->name)) ? 'ed✓' : '' }}
                                                             </span>
                                                         </label>
                                                         <!--end::Checkbox-->
