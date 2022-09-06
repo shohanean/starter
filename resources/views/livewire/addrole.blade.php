@@ -271,7 +271,7 @@
                     </div>
                 @endif
                 <!--begin::Form-->
-                <form wire:submit.prevent="update" class="form">
+                <form wire:submit.prevent="update({{ $role_id }})" class="form">
                     <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_role_header" data-kt-scroll-wrappers="#kt_modal_update_role_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->

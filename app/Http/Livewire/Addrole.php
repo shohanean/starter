@@ -16,7 +16,6 @@ class Addrole extends Component
     public $permission = [];
     public $update_permissions = [];
     public $role_id;
-    public $ean;
 
     protected $rules = [
         'role_title' => 'required|unique:roles,name'
@@ -32,12 +31,15 @@ class Addrole extends Component
     {
         Role::findOrFail($id)->delete();
     }
-    public function update()
+    public function update($id)
     {
         $this->validate([
             'role_name' => 'required|unique:roles,name,'.$this->role_id,
         ]);
-        $role = Role::find($this->role_id)->first();
+        Role::find($id)->update([
+            'name' => $this->role_name
+        ]);
+        $role = Role::find($id);
         $role->syncPermissions($this->update_permissions);
         session()->flash('role_update_message', 'Role updated successfully!.');
     }
