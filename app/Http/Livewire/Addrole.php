@@ -11,14 +11,35 @@ use Illuminate\Support\Str;
 class Addrole extends Component
 {
     public $role_title;
+    public $role_name;
+    public $permissions_under_role;
     public $permission = [];
+    public $update_permissions = [];
+    public $role_id;
+    public $ean;
 
     protected $rules = [
         'role_title' => 'required|unique:roles,name'
     ];
+    public function editrole($id)
+    {
+        $this->role_id = $id;
+        $role = Role::findOrFail($id);
+        $this->role_name = $role->name;
+        $this->permissions_under_role = $role->getAllPermissions();
+    }
     public function deleterole($id)
     {
         Role::findOrFail($id)->delete();
+    }
+    public function update()
+    {
+        $this->validate([
+            'role_name' => 'required|unique:roles,name,'.$this->role_id,
+        ]);
+        $role = Role::find($this->role_id)->first();
+        $role->syncPermissions($this->update_permissions);
+        session()->flash('role_update_message', 'Role updated successfully!.');
     }
     public function submit()
     {

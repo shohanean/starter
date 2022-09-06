@@ -86,7 +86,7 @@
                                 @endcan
                             @endif
                             @can ('can edit role')
-                                <button type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                                <button wire:click="editrole({{ $role->id }})" type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
                             @endcan
                         @else
                             <div class="badge bg-secondary text-dark">Changes not allowed</div>
@@ -233,7 +233,7 @@
 </div>
 <!--end::Modal - Add role-->
 <!--begin::Modal - Update role-->
-<div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-750px">
         <!--begin::Modal content-->
@@ -244,23 +244,34 @@
                 <h2 class="fw-bolder">Update Role</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fa fa-times"></span>
                 </div>
                 <!--end::Close-->
             </div>
             <!--end::Modal header-->
             <!--begin::Modal body-->
             <div class="modal-body scroll-y mx-5 my-7">
+                @if (session()->has('role_update_message'))
+                    <div class="alert alert-primary d-flex align-items-center p-4 mb-10">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen048.svg-->
+                        <span class="svg-icon svg-icon-2hx svg-icon-dark me-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"></path>
+                                <path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                        <div class="d-flex flex-column">
+                            <h4 class="mb-1 text-dark">Updated!</h4>
+                            <span>
+                                {{ session('role_update_message') }}
+                            </span>
+                        </div>
+                    </div>
+                @endif
                 <!--begin::Form-->
-                <form id="kt_modal_update_role_form" class="form" action="#">
+                <form wire:submit.prevent="update" class="form">
                     <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_role_header" data-kt-scroll-wrappers="#kt_modal_update_role_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
@@ -271,7 +282,10 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input class="form-control form-control-solid" placeholder="Enter a role name" name="role_name" value="dynamic">
+                            <input class="@error('role_name') is-invalid @enderror form-control form-control-solid" placeholder="Enter a role name" value="{{ $role_name }}" wire:model="role_name">
+                            @error('role_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -291,29 +305,33 @@
                                                 There is no permission to show
                                             </div>
                                         @endif
-                                        @foreach ($permissions as $permission)
-                                        <!--begin::Table row-->
-                                        <tr>
-                                            <!--begin::Label-->
-                                            <td class="text-gray-800">{{ Str::title($permission->name) }}</td>
-                                            <!--end::Label-->
-                                            <!--begin::Input group-->
-                                            <td>
-                                                <!--begin::Wrapper-->
-                                                <div class="d-flex">
-                                                    <!--begin::Checkbox-->
-                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                        <input class="form-check-input" type="checkbox" value="{{ $permission->name }}" name="">
-                                                        <span class="form-check-label">Select</span>
-                                                    </label>
-                                                    <!--end::Checkbox-->
-                                                </div>
-                                                <!--end::Wrapper-->
-                                            </td>
-                                            <!--end::Input group-->
-                                        </tr>
-                                        <!--end::Table row-->
-                                        @endforeach
+                                        @if ($permissions_under_role)
+                                            @foreach ($permissions as $permission)
+                                            <!--begin::Table row-->
+                                            <tr>
+                                                <!--begin::Label-->
+                                                <td class="text-gray-800">{{ Str::title($permission->name) }}</td>
+                                                <!--end::Label-->
+                                                <!--begin::Input group-->
+                                                <td>
+                                                    <!--begin::Wrapper-->
+                                                    <div class="d-flex">
+                                                        <!--begin::Checkbox-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                            <input class="form-check-input" type="checkbox" wire:model="update_permissions" value="{{ $permission->name }}" {{ ($permissions_under_role->contains('name', $permission->name)) ? 'checked' : '' }}>
+                                                            <span class="form-check-label">
+                                                                Select
+                                                            </span>
+                                                        </label>
+                                                        <!--end::Checkbox-->
+                                                    </div>
+                                                    <!--end::Wrapper-->
+                                                </td>
+                                                <!--end::Input group-->
+                                            </tr>
+                                            <!--end::Table row-->
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>
@@ -326,9 +344,8 @@
                     <!--end::Scroll-->
                     <!--begin::Actions-->
                     <div class="text-center pt-15">
-                        <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">Discard</button>
                         <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
-                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-label">Update Role</span>
                             <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
