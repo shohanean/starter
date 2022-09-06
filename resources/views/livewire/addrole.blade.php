@@ -305,6 +305,9 @@
                                                 There is no permission to show
                                             </div>
                                         @endif
+                                        {{-- <p>ean: {{ $ean }}</p>
+                                        <p>update_permissions: {{ print_r($update_permissions) }}</p> --}}
+                                        {{-- <p>update_permissions: {{ print_r($permissions_under_role) }}</p> --}}
                                         @if ($permissions_under_role)
                                             @foreach ($permissions as $permission)
                                             <!--begin::Table row-->
@@ -316,9 +319,10 @@
                                                 <td>
                                                     <!--begin::Wrapper-->
                                                     <div class="d-flex">
+
                                                         <!--begin::Checkbox-->
                                                         <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                            <input class="form-check-input" type="checkbox" wire:model="update_permissions" value="{{ $permission->name }}" {{ ($permissions_under_role->contains('name', $permission->name)) ? 'checked' : '' }}>
+                                                            <input name="update_permissions[]" class="form-check-input" type="checkbox" wire:model="update_permissions" value="{{ $permission->name }}" {{ ($permissions_under_role->contains('name', $permission->name)) ? 'checked' : '' }}>
                                                             <span class="form-check-label {{ ($permissions_under_role->contains('name', $permission->name)) ? 'badge bg-success' : '' }}">
                                                                 Select{{ ($permissions_under_role->contains('name', $permission->name)) ? 'ed✓' : '' }}
                                                             </span>
@@ -344,7 +348,7 @@
                     <!--end::Scroll-->
                     <!--begin::Actions-->
                     <div class="text-center pt-15">
-                        <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
+                        <button type="submit" class="btn btn-primary">
                             <span class="indicator-label">Update Role</span>
                             <span class="indicator-progress">Please wait...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

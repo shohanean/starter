@@ -16,6 +16,8 @@ class Addrole extends Component
     public $permission = [];
     public $update_permissions = [];
     public $role_id;
+    public $role_update_btn;
+    public $ean = "kanna";
 
     protected $rules = [
         'role_title' => 'required|unique:roles,name'
@@ -25,7 +27,28 @@ class Addrole extends Component
         $this->role_id = $id;
         $role = Role::findOrFail($id);
         $this->role_name = $role->name;
-        $this->permissions_under_role = $role->getAllPermissions();
+
+        // foreach ($role->getAllPermissions()->pluck('name') as $already_selected_permission) {
+        //     $this->permissions_under_role .= $already_selected_permission;
+        // }
+
+        // $diff = ->diff();
+        // $this->permissions_under_role = $role->getAllPermissions()->pluck('name')->contains('name', 'can add role');
+
+        // $hudai = [];
+        // foreach (Permission::select('name')->get() as $d_permission) {
+
+        //     if($role->getAllPermissions()->pluck('name')->contains('name', $d_permission)){
+        //         $hudai["$d_permission"] = 'already ase';
+        //     }
+        //     else{
+        //         $hudai["$d_permission"] = 'from bd';
+        //     }
+        // }
+        // $this->permissions_under_role = $hudai;
+
+        // $this->permissions_under_role = $role->getAllPermissions()->pluck('name')->contains('name', 'can add role');
+        $this->permissions_under_role = $role->getAllPermissions()->pluck('name');
     }
     public function deleterole($id)
     {
@@ -61,7 +84,7 @@ class Addrole extends Component
     {
         return view('livewire.addrole', [
             'permissions' => Permission::select('id','name')->get(),
-            'roles' => Rolecustom::select('id','name')->with('users')->latest()->get()
+            'roles' => Rolecustom::select('id','name')->with('users')->latest()->get(),
         ]);
     }
 }
