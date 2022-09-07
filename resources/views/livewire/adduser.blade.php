@@ -147,7 +147,7 @@
                         <!--begin::Table head-->
                         <thead>
                             <tr class="fw-bolder text-muted bg-light">
-                                <th class="ps-4 min-w-300px rounded-start">Agent</th>
+                                <th class="ps-4 min-w-300px rounded-start">User Info</th>
                                 <th class="min-w-150px">Role</th>
                                 <th class="min-w-150px">Permissions</th>
                                 <th class="min-w-200px text-end rounded-end"></th>
