@@ -9,7 +9,7 @@
 
 ## About This Project
 
-This is a starter project for Laravel with various packages included. 
+This is a starter project for Laravel with various packages included.
 Packages List is given below:
 
 - Avatar Generator [laravolt/avatar](https://github.com/laravolt/avatar).
@@ -20,7 +20,16 @@ Packages List is given below:
 
 ## Setup
 
-- **Clone The Repository**
+- **Clone the repository with command: git clone https_link_of_the_repository**
+- **Install [Composer](https://getcomposer.org/download/)**
+- **Run the command: composer update**
+- **Run cp .env.example .env in the terminal**
+- **Then run php artisan key:generate**
+- **Setup the database in .env file**
+- **Then run php artisan migrate**
+- **Then run php artisan db:seed**
+- **Then run php artisan world:init**
+- **Finally serve the application with php artisan serve**
 
 ## Tools Used
 
