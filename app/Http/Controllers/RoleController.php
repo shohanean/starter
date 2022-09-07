@@ -78,7 +78,14 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        if($role->name == 'Super Admin'){
+            abort(404);
+        }
+        else{
+            $permissions = Permission::all();
+            return view('backend.role.edit', compact('role', 'permissions'));
+        }
     }
 
     /**
@@ -91,12 +98,12 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'role_name' => 'required|unique:roles,name,'.$id.',id'
+            'name' => 'required|unique:roles,name,'.$id.',id'
         ]);
         $role = Role::find($id)->syncPermissions($request->permission);
-        $role->name = Str::title($request->role_name);
+        $role->name = Str::title($request->name);
         $role->save();
-        return back()->with('role_update_success', $request->role_name. " Role Updated Successfully!");
+        return back()->with('role_update_success', " Role Updated Successfully!");
     }
 
     /**

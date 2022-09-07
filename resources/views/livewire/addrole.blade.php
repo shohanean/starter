@@ -86,7 +86,8 @@
                                 @endcan
                             @endif
                             @can ('can edit role')
-                                <button wire:click="editrole({{ $role->id }})" type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button>
+                                {{-- <button wire:click="editrole({{ $role->id }})" type="button" class="btn btn-sm btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">Edit Role</button> --}}
+                                <a href="{{ route('role.edit', $role->id) }}" class="btn btn-sm btn-light btn-active-light-primary my-1">Edit Role</a>
                             @endcan
                         @else
                             <div class="badge bg-secondary text-dark">Changes not allowed</div>
@@ -305,8 +306,11 @@
                                                 There is no permission to show
                                             </div>
                                         @endif
-                                        {{-- <p>ean: {{ $ean }}</p>
-                                        <p>update_permissions: {{ print_r($update_permissions) }}</p> --}}
+                                        <p>ean: {{ print_r($ean) }}</p>
+                                        @foreach ($ean as $hu => $ea)
+                                            <input wire:model="ea" type="checkbox" {{ $ea }}>{{ $hu }} <br>
+                                        @endforeach
+                                        {{-- <p>update_permissions: {{ print_r($update_permissions) }}</p> --}}
                                         {{-- <p>update_permissions: {{ print_r($permissions_under_role) }}</p> --}}
                                         @if ($permissions_under_role)
                                             @foreach ($permissions as $permission)
