@@ -14,8 +14,6 @@ Packages List is given below:
 
 - Avatar Generator [laravolt/avatar](https://github.com/laravolt/avatar).
 - Number to Words Converter [kwn/number-to-words](https://github.com/kwn/number-to-words).
-- Country, City List [khsing/laravel-world](https://github.com/khsing/laravel-world).
-
 
 
 ## Setup
@@ -28,7 +26,6 @@ Packages List is given below:
 - **Setup the database in .env file**
 - **Then run php artisan migrate**
 - **Then run php artisan db:seed**
-- **Then run php artisan world:init**
 - **Finally serve the application with php artisan serve**
 
 ## Tools Used
