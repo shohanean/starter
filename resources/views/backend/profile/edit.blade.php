@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('profile.index')
-active
+    active
 @endsection
 
 @section('toolbar')
@@ -9,8 +9,8 @@ active
         'links' => [
             'home' => 'home',
             'profile overview' => 'profile.index',
-            'profile edit' => ''
-        ]
+            'profile edit' => '',
+        ],
     ])
 @endsection
 

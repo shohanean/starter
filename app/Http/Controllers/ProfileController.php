@@ -45,10 +45,9 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if(auth()->id() == $id){
+        if (auth()->id() == $id) {
             return view('backend.profile.show');
-        }
-        else{
+        } else {
             return abort(404);
         }
     }
@@ -61,10 +60,9 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->id() == $id){
+        if (auth()->id() == $id) {
             return view('backend.profile.edit');
-        }
-        else{
+        } else {
             return abort(404);
         }
     }
