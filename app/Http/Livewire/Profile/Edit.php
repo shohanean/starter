@@ -37,10 +37,10 @@ class Edit extends Component
 
     public function mount()
     {
-        $this->random_code = rand(11111,99999);
+        $this->random_code = rand(11111, 99999);
         $this->avatar_link = auth()->user()->avatar;
         $this->name = auth()->user()->name;
-        if(Profile::where('user_id', auth()->id())->exists()){
+        if (Profile::where('user_id', auth()->id())->exists()) {
             $profile_info = Profile::where('user_id', auth()->id())->first();
             $this->phone_number = $profile_info->phone_number;
             $this->country_id = $profile_info->country_id;
@@ -50,7 +50,7 @@ class Edit extends Component
             $this->ig_link = $profile_info->ig_link;
             $this->li_link = $profile_info->li_link;
         }
-        if($this->country_id){
+        if ($this->country_id) {
             $this->cities = Country::getByCode($this->country_id)->children();
         }
     }
@@ -61,8 +61,7 @@ class Edit extends Component
 
         if ($this->country_id != "") {
             $this->cities = Country::getByCode($this->country_id)->children();
-        }
-        else{
+        } else {
             $this->cities = [];
         }
     }
@@ -72,10 +71,10 @@ class Edit extends Component
             'avatar' => 'nullable|image|max:1024', // 1MB Max
             'name' => 'required',
         ]);
-        if($this->avatar){
+        if ($this->avatar) {
             $upload_name = $this->avatar->store('avatars');
             // if old photo available then delete it first
-            if(auth()->user()->avatar){
+            if (auth()->user()->avatar) {
                 Storage::delete(auth()->user()->avatar);
             }
             User::find(auth()->id())->update([
@@ -110,10 +109,9 @@ class Edit extends Component
     }
     public function checker()
     {
-        if($this->typed_code == $this->random_code){
+        if ($this->typed_code == $this->random_code) {
             $this->disabled = true;
-        }
-        else{
+        } else {
             $this->disabled = false;
         }
     }
@@ -130,8 +128,8 @@ class Edit extends Component
     }
     public function render()
     {
-        return view('livewire.profile.edit',[
-            'countries' => World::Countries()
+        return view('livewire.profile.edit', [
+            // 'countries' => World::Countries()
         ]);
     }
 }
