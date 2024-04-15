@@ -4,7 +4,8 @@
     <!--begin::Basic info-->
     <div class="card mb-5 mb-xl-10">
         <!--begin::Card header-->
-        <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+        <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
+            data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
             <!--begin::Card title-->
             <div class="card-title m-0">
                 <h3 class="fw-bold m-0">Profile Edit</h3>
@@ -31,12 +32,18 @@
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <!--begin::Image input-->
-                            <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url({{ asset('dashboard_assets/media/svg/avatars/blank.svg') }})">
+                            <div class="image-input image-input-outline" data-kt-image-input="true"
+                                style="background-image: url({{ asset('dashboard_assets/media/svg/avatars/blank.svg') }})">
                                 <!--begin::Preview existing avatar-->
-                                <div wire:ignore class="image-input-wrapper w-125px h-125px" style="background-image: url({{ ($avatar_link) ? asset($avatar_link) : Avatar::create(auth()->user()->name)->setShape('square') }})"></div>
+                                <div wire:ignore class="image-input-wrapper w-125px h-125px"
+                                    style="background-image: url({{ $avatar_link ? asset($avatar_link) : Avatar::create(auth()->user()->name)->setShape('square') }})">
+                                </div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" data-kt-initialized="1">
+                                <label
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                    data-kt-initialized="1">
                                     <i class="bi bi-pencil-fill fs-7"></i>
                                     <!--begin::Inputs-->
                                     <input type="file" wire:model="avatar">
@@ -45,12 +52,18 @@
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" data-kt-initialized="1">
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                    data-kt-initialized="1">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Cancel-->
                                 <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" data-kt-initialized="1">
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                    data-kt-initialized="1">
                                     <i class="bi bi-x fs-2"></i>
                                 </span>
                                 <!--end::Remove-->
@@ -73,8 +86,9 @@
                             <label class="fs-6 required fw-bold mb-2">Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="name" type="text" class="form-control form-control-lg" placeholder="Name" value="{{ $name }}">
-                            @error ('name')
+                            <input wire:model="name" type="text" class="form-control form-control-lg"
+                                placeholder="Name" value="{{ $name }}">
+                            @error('name')
                                 <div class="fv-plugins-message-container invalid-feedback">{{ $message }}</div>
                             @enderror
                             <!--end::Input-->
@@ -82,16 +96,18 @@
                         <div class="fv-row col-lg-6">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">Phone Number</label>
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" aria-label="Phone number must be active" data-kt-initialized="1"></i>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
+                                aria-label="Phone number must be active" data-kt-initialized="1"></i>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="phone_number" type="text" class="form-control form-control-lg" placeholder="Phone Number" value="{{ $phone_number }}">
+                            <input wire:model="phone_number" type="text" class="form-control form-control-lg"
+                                placeholder="Phone Number" value="{{ $phone_number }}">
                             <!--end::Input-->
                         </div>
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="row mb-8">
+                    {{-- <div class="row mb-8">
                         <div class="fv-row col-lg-6">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">Country</label>
@@ -102,7 +118,7 @@
                                     <option value="">-Select One Country-</option>
                                 @endif
                                 @foreach ($countries as $country)
-                                @if ($country->code == "bd")
+                                @if ($country->code == 'bd')
                                     <option {{ ($country->code == $country_id) ? 'selected':'' }} value="{{ $country->code }}">{{ $country->name }}</option>
                                     @break
                                 @endif
@@ -127,7 +143,7 @@
                             </select>
                             <!--end::Input-->
                         </div>
-                    </div>
+                    </div> --}}
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     <div class="row mb-8">
@@ -152,7 +168,8 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="fb_link" type="text" class="form-control form-control-lg" placeholder="Facebook Profile Link" value="{{ $fb_link }}">
+                            <input wire:model="fb_link" type="text" class="form-control form-control-lg"
+                                placeholder="Facebook Profile Link" value="{{ $fb_link }}">
                             <!--end::Input-->
                         </div>
                         <div class="fv-row col-lg-4">
@@ -163,7 +180,8 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="ig_link" type="text" class="form-control form-control-lg" placeholder="Instagram Profile Link" value="{{ $ig_link }}">
+                            <input wire:model="ig_link" type="text" class="form-control form-control-lg"
+                                placeholder="Instagram Profile Link" value="{{ $ig_link }}">
                             <!--end::Input-->
                         </div>
                         <div class="fv-row col-lg-4">
@@ -174,7 +192,8 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input wire:model="li_link" type="text" class="form-control form-control-lg" placeholder="Linkedin Profile Link" value="{{ $li_link }}">
+                            <input wire:model="li_link" type="text" class="form-control form-control-lg"
+                                placeholder="Linkedin Profile Link" value="{{ $li_link }}">
                             <!--end::Input-->
                         </div>
                     </div>
@@ -229,9 +248,9 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
                 <!--end::Actions-->
-            <input type="hidden">
-            <div>
-            </div>
+                <input type="hidden">
+                <div>
+                </div>
             </form>
             <!--end::Form-->
         </div>
@@ -261,7 +280,9 @@
                             <!--begin::Content-->
                             <div class="fw-semibold">
                                 <div class="fs-6">
-                                    You can delete your account by typing the below generated code. Once you delete it, you won't be able to undo the action. Only super admin will be able to reactive your account.
+                                    You can delete your account by typing the below generated code. Once you delete it,
+                                    you won't be able to undo the action. Only super admin will be able to reactive your
+                                    account.
                                     <span class="fw-bold text-danger">I am sure, I want to delete my account</span>
                                 </div>
                                 <div class="row mt-5">
@@ -271,10 +292,12 @@
                                         </button>
                                     </div>
                                     <div class="col-md-4 p-1">
-                                        <input class="form-control" type="text" wire:model="typed_code" wire:keyup="checker">
+                                        <input class="form-control" type="text" wire:model="typed_code"
+                                            wire:keyup="checker">
                                     </div>
                                     <div class="col-md-4 p-1">
-                                        <button {{ ($disabled) ? '':'disabled' }} class="form-control btn btn-danger" wire:click="deleteaccount">Delete</button>
+                                        <button {{ $disabled ? '' : 'disabled' }} class="form-control btn btn-danger"
+                                            wire:click="deleteaccount">Delete</button>
                                     </div>
                                 </div>
                             </div>
