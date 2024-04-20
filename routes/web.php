@@ -2,7 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Route,Auth};
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\{HomeController, SocialController, ProfileController, BackupController, RoleController, UserController};
+use App\Http\Controllers\{FrontendController, HomeController, SocialController, ProfileController, BackupController, RoleController, UserController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +13,7 @@ use App\Http\Controllers\{HomeController, SocialController, ProfileController, B
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [FrontendController::class, 'index'])->name('index');
 
 Auth::routes();
 
